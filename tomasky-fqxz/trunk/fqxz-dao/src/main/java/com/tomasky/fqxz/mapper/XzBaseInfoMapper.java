@@ -1,0 +1,16 @@
+package com.tomasky.fqxz.mapper;
+
+import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
+import com.tomasky.fqxz.model.XzBaseinfo;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface XzBaseInfoMapper {
+
+    List<XzBaseinfo> getXzBaseInfos(XzBaseInfoBo param);
+
+    Long getXzBaseInfosCount(XzBaseInfoBo param);
+
+}
