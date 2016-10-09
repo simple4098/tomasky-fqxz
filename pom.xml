@@ -8,29 +8,32 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.3.5.RELEASE</version>
+        <relativePath/>
     </parent>
     <groupId>com.tomasky</groupId>
-    <artifactId>tomasky-bill</artifactId>
+    <artifactId>tomasky-fqxz</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>tomasky-bill</name>
-    <description>番茄服务统一模板.</description>
+    <name>tomasky-fqxz</name>
+    <description>番茄小站后台服务</description>
 
     <properties>
         <java.version>1.8</java.version>
-        <fastjson.version>1.2.11</fastjson.version>
+        <javaee.api.version>7.0</javaee.api.version>
+        <httpclient.version>4.5.2</httpclient.version>
+        <fastjson.version>1.2.17</fastjson.version>
+        <google.collections.version>1.0</google.collections.version>
         <commons.lang3.version>3.4</commons.lang3.version>
         <tomasky.cache.api.version>1.0.2</tomasky.cache.api.version>
-        <commons.beanutils.version>1.9.2</commons.beanutils.version>
+        <commons.beanutils.version>1.9.3</commons.beanutils.version>
     </properties>
 
     <modules>
-        <module>bill-model</module>
-        <module>bill-dao</module>
-        <module>bill-rpc</module>
-        <module>bill-service</module>
-        <module>bill-web</module>
-        <module>bill-common</module>
+        <module>fqxz-model</module>
+        <module>fqxz-dao</module>
+        <module>fqxz-service</module>
+        <module>fqxz-web</module>
+        <module>fqxz-common</module>
     </modules>
 
     <repositories>
