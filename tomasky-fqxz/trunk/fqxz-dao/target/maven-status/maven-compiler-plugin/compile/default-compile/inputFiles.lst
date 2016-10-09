@@ -1,7 +1,0 @@
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\dao\XzBaseinfoRepo.java
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\interceptor\PaginationInterceptor.java
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\interceptor\MySqlDialect.java
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\mapper\XzBaseInfoMapper.java
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\interceptor\OracleDialect.java
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\interceptor\PostgresqlDialect.java
-D:\IdeaProjects\infrastructure\tomasky-fqxz\fqxz-dao\src\main\java\com\tomasky\fqxz\interceptor\Dialect.java

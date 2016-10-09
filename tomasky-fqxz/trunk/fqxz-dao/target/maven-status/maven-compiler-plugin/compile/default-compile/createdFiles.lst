@@ -1,9 +1,0 @@
-com\tomasky\fqxz\interceptor\Dialect.class
-com\tomasky\fqxz\interceptor\PostgresqlDialect.class
-com\tomasky\fqxz\mapper\XzBaseInfoMapper.class
-com\tomasky\fqxz\interceptor\OracleDialect.class
-com\tomasky\fqxz\dao\XzBaseinfoRepo.class
-com\tomasky\fqxz\interceptor\PaginationInterceptor.class
-com\tomasky\fqxz\interceptor\MySqlDialect.class
-com\tomasky\fqxz\interceptor\Dialect$Type.class
-com\tomasky\fqxz\interceptor\PaginationInterceptor$1.class
