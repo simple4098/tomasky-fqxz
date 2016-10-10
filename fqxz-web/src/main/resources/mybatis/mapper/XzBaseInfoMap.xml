@@ -7,7 +7,7 @@
     <!-- 根据条件查询支付流水 -->
     <select id="getXzBaseInfos" parameterType="com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo" resultMap="XzBaseinfoMap">
         <include refid="find_xz_base_info_sql"/>
-        ORDER BY p.pay_at DESC
+        ORDER BY i.id DESC
     </select>
 
     <!-- 根据条件查询支付流水的总记录数 -->

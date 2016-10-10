@@ -26,9 +26,14 @@ public class XzBaseinfo {
     private String address;
 
     /**
-     * 账号
+     * 账号id
      */
     private Integer accountid;
+
+    /**
+     * 账号
+     */
+    private String account;
 
     /**
      * 邮政编码
@@ -150,6 +155,14 @@ public class XzBaseinfo {
 
     public void setAccountid(Integer accountid) {
         this.accountid = accountid;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getAddressCode() {
