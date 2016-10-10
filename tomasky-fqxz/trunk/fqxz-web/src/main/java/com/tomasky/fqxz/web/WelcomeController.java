@@ -18,6 +18,7 @@ package com.tomasky.fqxz.web;
 
 import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
 import com.tomasky.fqxz.common.core.orm.Page;
+import com.tomasky.fqxz.dao.XzBaseinfoRepo;
 import com.tomasky.fqxz.model.XzBaseinfo;
 import com.tomasky.fqxz.service.XzBaseInfoService;
 import org.slf4j.Logger;
@@ -26,14 +27,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 public class WelcomeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WelcomeController.class);
 
     @Autowired
     private XzBaseInfoService xzBaseInfoService;
+
+    @Autowired
+    private XzBaseinfoRepo xzBaseinfoRepo;
 
     @RequestMapping("/")
     String home() {
@@ -47,9 +49,9 @@ public class WelcomeController {
         return xzBaseInfoService.getPageRecord(param);
     }
 
-    @RequestMapping("foo")
-    public String foo(Map<String, Object> model) {
-        throw new RuntimeException("Foo");
+    @RequestMapping("/one")
+    public XzBaseinfo getOne() {
+        return xzBaseinfoRepo.findById(3611l);
     }
 
 }
