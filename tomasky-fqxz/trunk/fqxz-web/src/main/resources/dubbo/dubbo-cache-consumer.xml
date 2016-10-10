@@ -5,11 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="fqxz" owner="tomasky" organization="tomasky"/>
+    <dubbo:application name="fqxz" owner="mo" organization="tomasky"/>
 
     <import resource="dubbo-registry.xml"/>
 
     <!--向外暴露的服务接口-->
-    <dubbo:reference interface="com.tomasky.cache.api.Cache" id="redisCache"/>
+    <dubbo:reference interface="com.tomasky.cache.api.Cache" id="cache"/>
 
 </beans>

@@ -16,10 +16,9 @@
 
 package com.tomasky.fqxz.web;
 
+import com.tomasky.fqxz.BaseController;
 import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
-import com.tomasky.fqxz.common.core.orm.Page;
 import com.tomasky.fqxz.dao.XzBaseinfoRepo;
-import com.tomasky.fqxz.model.XzBaseinfo;
 import com.tomasky.fqxz.service.XzBaseInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +26,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
-public class WelcomeController {
+public class WelcomeController extends BaseController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(WelcomeController.class);
 
     @Autowired
@@ -37,21 +39,16 @@ public class WelcomeController {
     @Autowired
     private XzBaseinfoRepo xzBaseinfoRepo;
 
-    @RequestMapping("/")
-    String home() {
-        return "hello world!";
-    }
-
     @RequestMapping("/inns")
-    Page<XzBaseinfo> getAllInns() {
+    public Map<String, Object> getAllInns() {
         XzBaseInfoBo param = new XzBaseInfoBo();
         param.setPayType(1);
-        return xzBaseInfoService.getPageRecord(param);
+        return new200(xzBaseInfoService.getPageRecord(param));
     }
 
     @RequestMapping("/one")
-    public XzBaseinfo getOne() {
-        return xzBaseinfoRepo.findById(3611l);
+    public Map<String, Object> getOne() {
+        return new200(xzBaseinfoRepo.findById(3611l));
     }
 
 }
