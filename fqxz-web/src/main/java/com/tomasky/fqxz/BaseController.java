@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -19,13 +18,13 @@ public class BaseController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
-//    @Autowired
-//    private Cache cache;
+    @Autowired
+    private Cache cache;
 
     @RequestMapping("/")
     public String home() {
-////        LOGGER.debug(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
-////        LOGGER.debug(String.valueOf(cache.get("test-fqxz")));
+        LOGGER.debug(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
+        LOGGER.debug(String.valueOf(cache.get("test-fqxz")));
         return "hello world!";
     }
 
