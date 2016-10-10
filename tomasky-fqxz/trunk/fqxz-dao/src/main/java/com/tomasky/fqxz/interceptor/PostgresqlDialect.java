@@ -8,8 +8,10 @@ public class PostgresqlDialect extends Dialect {
 		sql = sql.trim();
 		StringBuffer sb = new StringBuffer();
 		sb.append(sql);
-		sb.append(" limit " + limit);
-		sb.append(" offset " + offset);
+		if (!sql.contains("count")){
+			sb.append(" limit " + limit);
+			sb.append(" offset " + offset);
+		}
 		return sb.toString();
 	}
 
