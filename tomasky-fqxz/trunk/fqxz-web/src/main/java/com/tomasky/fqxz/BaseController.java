@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * @author X
+ * @author mo
  */
-@RestController
 public class BaseController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
-    @Autowired
-    private Cache cache;
+//    @Autowired
+//    private Cache cache;
 
     @RequestMapping("/")
-    String home() {
-        LOGGER.debug(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
-        LOGGER.debug(String.valueOf(cache.get("test-fqxz")));
+    public String home() {
+////        LOGGER.debug(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
+////        LOGGER.debug(String.valueOf(cache.get("test-fqxz")));
         return "hello world!";
     }
 
