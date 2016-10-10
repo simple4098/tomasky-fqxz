@@ -25,22 +25,6 @@ spring:
    jpa:
      show-sql: true
 
-mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*Map.xml
-
-server:
-    port: 8080
-
-endpoints:
-   shutdown:
-      enabled: true
-
-info:
-  name: tomasky bill service
-  description: tomasky bill service
-  version: 1.0.0
-
 ---
 spring:
    profiles: dev
@@ -60,17 +44,23 @@ spring:
    jpa:
      show-sql: true
 
-mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*Map.xml
-#  type-handlers-package:
-
-server:
-    port: 8080
-
 ---
 spring:
    profiles: pro
 
+---
 server:
     port: 8080
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*Map.xml
+
+endpoints:
+   shutdown:
+      enabled: true
+
+info:
+  name: tomasky bill service
+  description: tomasky bill service
+  version: 1.0.0
