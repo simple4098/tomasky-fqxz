@@ -31,15 +31,26 @@ public class PaginationInterceptor implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         MetaObject metaStatementHandler = MetaObject.forObject(statementHandler, DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_OBJECT_DEL_FACTORY);
-        Integer pageNo = (Integer) metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageNo");
-        Integer pageSize = (Integer) metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageSize");
+        Integer pageNo = Constants.DEFAULT_PAGE_NO;
+        Integer pageSize = Constants.DEFAULT_PAGE_SIZE;
+        boolean isPage = false;
+        try {
+            Object pageNoPara = metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageNo");
+            pageNo = pageNoPara != null ? (Integer) pageNoPara : null;
+            Object pageSizePara = metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageSize");
+            pageSize = pageSizePara != null ? (Integer) pageSizePara : null;
+            Object isPagePara = metaStatementHandler.getValue("delegate.boundSql.parameterObject.isPage");
+            isPage = isPagePara != null ? (boolean) isPagePara : null;
+        } catch (Exception e) {
+
+        }
         MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
         String mapperId = mappedStatement.getId();
         mapperId = mapperId.substring(mapperId.lastIndexOf(".") + 1);
         if (mapperId.toUpperCase().indexOf("COUNT") != -1) {
             return invocation.proceed();
         }
-        if (pageNo == null || pageNo == Constants.DO_NOT_PAGE) {
+        if (pageNo == null || pageNo == Constants.DO_NOT_PAGE || !isPage) {
             return invocation.proceed();
         }
         RowBounds rowBounds = new RowBounds((pageNo - 1) * pageSize, pageSize);
