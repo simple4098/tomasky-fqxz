@@ -24,7 +24,7 @@ public class XzBaseInfoService {
     }
 
     public Page<XzBaseinfo> getPageRecord(XzBaseInfoBo param) {
-        Page<XzBaseinfo> page = new Page(param.getPageSize(), 2);
+        Page<XzBaseinfo> page = new Page(param.getPageSize(), param.getPageNo());
         page.setTotalCount(xzBaseInfoMapper.getXzBaseInfosCount(param));
         if (page.getTotalCount() == 0) {  //总数为0 无需继续查询详情
             return page;
