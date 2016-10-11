@@ -39,10 +39,14 @@ public class WelcomeController extends BaseController {
     @Autowired
     private XzBaseinfoRepo xzBaseinfoRepo;
 
+    @RequestMapping("/page")
+    public Map<String, Object> getPages(XzBaseInfoBo param) {
+        return new200(xzBaseInfoService.getPageRecord(param));
+    }
+
     @RequestMapping("/inns")
     public Map<String, Object> getAllInns(XzBaseInfoBo param) {
-        param.setPayType(1);
-        return new200(xzBaseInfoService.getPageRecord(param));
+        return new200(xzBaseInfoService.findList(param));
     }
 
     @RequestMapping("/one")

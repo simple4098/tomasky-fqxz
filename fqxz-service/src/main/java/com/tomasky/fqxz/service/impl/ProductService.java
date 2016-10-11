@@ -1,7 +1,8 @@
 package com.tomasky.fqxz.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.bo.param.CommParam;
-import com.tomasky.fqxz.common.core.orm.Page;
 import com.tomasky.fqxz.common.exception.ProductException;
 import com.tomasky.fqxz.mapper.IProductMapper;
 import com.tomasky.fqxz.model.Product;
@@ -19,18 +20,13 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService {
     @Resource
-    private  IProductMapper productMapper;
+    private IProductMapper productMapper;
+
     @Override
-    public Page<Product> findProductByInnId(CommParam param) throws ProductException{
+    public PageInfo<Product> findProductByInnId(CommParam param) throws ProductException {
         Assert.notNull(param.getInnId());
-        Page<Product> page = new Page(param.getPageSize(), param.getPageNo());
-        Integer total = productMapper.selectProductByInnIdCount(param);
-        page.setTotalCount(total);
-        if (total==0){
-          return page;
-        }
+        PageHelper.startPage(param.getPageNo(), param.getPageSize());
         List<Product> productList = productMapper.selectProductByInnId(param);
-        page.setResult(productList);
-        return page;
+        return new PageInfo(productList);
     }
 }

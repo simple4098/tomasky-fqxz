@@ -1,7 +1,7 @@
 package com.tomasky.fqxz.service;
 
+import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.bo.param.CommParam;
-import com.tomasky.fqxz.common.core.orm.Page;
 import com.tomasky.fqxz.common.exception.ProductException;
 import com.tomasky.fqxz.model.Product;
 
@@ -11,5 +11,5 @@ import com.tomasky.fqxz.model.Product;
  */
 public interface IProductService {
 
-    Page<Product> findProductByInnId(CommParam commParam)throws ProductException;
+    PageInfo<Product> findProductByInnId(CommParam commParam) throws ProductException;
 }
