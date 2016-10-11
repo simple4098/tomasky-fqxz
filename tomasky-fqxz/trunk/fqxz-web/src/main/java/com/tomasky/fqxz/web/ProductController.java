@@ -19,14 +19,19 @@ package com.tomasky.fqxz.web;
 import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.BaseController;
 import com.tomasky.fqxz.bo.param.CommParam;
+import com.tomasky.fqxz.bo.param.product.ProductBo;
+import com.tomasky.fqxz.bo.param.product.ProductOrderBo;
+import com.tomasky.fqxz.common.exception.ProductException;
 import com.tomasky.fqxz.dao.XzBaseinfoRepo;
 import com.tomasky.fqxz.model.Product;
 import com.tomasky.fqxz.service.IProductService;
-import com.tomasky.fqxz.service.XzBaseInfoService;
+import com.tomasky.fqxz.vo.ProductOrderVo;
+import com.tomasky.fqxz.vo.ProductVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -37,8 +42,6 @@ public class ProductController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
-    @Autowired
-    private XzBaseInfoService xzBaseInfoService;
     @Autowired
     private IProductService productService;
 
@@ -54,7 +57,27 @@ public class ProductController extends BaseController {
             LOGGER.error("商品列表异常:", e);
             return new500(e.getMessage());
         }
+    }
+    @RequestMapping("/detail")
+    public Map<String,Object> productDetail(ProductBo productBo){
+        try{
+            ProductVo product =  productService.findProductDetail(productBo);
+            return new200(product );
+        }catch (Exception e){
+            LOGGER.error("商品详情异常:",e);
+            return new500(e.getMessage());
+        }
+    }
 
+    @RequestMapping(value = "/order",method = RequestMethod.POST)
+    public Map<String,Object> productOrder(ProductOrderBo productOrderBo){
+        try {
+            ProductOrderVo order = productService.order(productOrderBo);
+            return new200(order);
+        } catch (Exception e) {
+            LOGGER.error("下单失败",e);
+            return new500(e.getMessage());
+        }
     }
 
     @RequestMapping("/one")

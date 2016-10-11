@@ -2,6 +2,7 @@ package com.tomasky.fqxz.mapper;
 
 import com.tomasky.fqxz.bo.param.CommParam;
 import com.tomasky.fqxz.bo.param.product.ProductBo;
+import com.tomasky.fqxz.model.OrderDetail;
 import com.tomasky.fqxz.model.Product;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,11 +13,8 @@ import java.util.List;
  * @data 2016/10/10
  */
 @Mapper
-public interface IProductMapper {
+public interface IOrderDetailMapper {
 
-    List<Product> selectProductByInnId(CommParam commParam);
+    void saveOrderDetail(OrderDetail orderDetail);
 
-    Product selectProductDetail(ProductBo productBo);
-
-    void updateStockAndSales(Product product);
 }
