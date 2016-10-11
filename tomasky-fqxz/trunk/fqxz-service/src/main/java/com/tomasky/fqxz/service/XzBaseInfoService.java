@@ -1,7 +1,8 @@
 package com.tomasky.fqxz.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
-import com.tomasky.fqxz.common.core.orm.Page;
 import com.tomasky.fqxz.mapper.XzBaseInfoMapper;
 import com.tomasky.fqxz.model.XzBaseinfo;
 import org.slf4j.Logger;
@@ -23,15 +24,10 @@ public class XzBaseInfoService {
         return xzBaseInfoMapper.getXzBaseInfos(param);
     }
 
-    public Page<XzBaseinfo> getPageRecord(XzBaseInfoBo param) {
-        Page<XzBaseinfo> page = new Page(param.getPageSize(), param.getPageNo());
-        page.setTotalCount(xzBaseInfoMapper.getXzBaseInfosCount(param));
-        if (page.getTotalCount() == 0) {  //总数为0 无需继续查询详情
-            return page;
-        }
-        param.setPage(true);
-        page.setResult(findList(param));
-        return page;
+    public PageInfo<XzBaseinfo> getPageRecord(XzBaseInfoBo param) {
+        PageHelper.startPage(param.getPageNo(), param.getPageSize());
+        List<XzBaseinfo> users = xzBaseInfoMapper.getXzBaseInfos(param);
+        return new PageInfo(users);
     }
 
 }

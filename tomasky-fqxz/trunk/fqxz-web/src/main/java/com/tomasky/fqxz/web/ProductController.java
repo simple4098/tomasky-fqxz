@@ -16,11 +16,9 @@
 
 package com.tomasky.fqxz.web;
 
+import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.BaseController;
 import com.tomasky.fqxz.bo.param.CommParam;
-import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
-import com.tomasky.fqxz.common.core.orm.Page;
-import com.tomasky.fqxz.common.exception.ProductException;
 import com.tomasky.fqxz.dao.XzBaseinfoRepo;
 import com.tomasky.fqxz.model.Product;
 import com.tomasky.fqxz.service.IProductService;
@@ -31,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,11 +48,11 @@ public class ProductController extends BaseController {
     @RequestMapping("/list")
     public Map<String, Object> getAllInns(CommParam commParam) {
         try {
-            Page<Product> productByInnId = productService.findProductByInnId(commParam);
-            return new200(productByInnId );
+            PageInfo<Product> productByInnId = productService.findProductByInnId(commParam);
+            return new200(productByInnId);
         } catch (Exception e) {
-            LOGGER.error("商品列表异常:",e);
-           return new500(e.getMessage());
+            LOGGER.error("商品列表异常:", e);
+            return new500(e.getMessage());
         }
 
     }
