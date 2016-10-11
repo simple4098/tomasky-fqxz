@@ -1,5 +1,6 @@
 package com.tomasky.fqxz.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,34 +18,49 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     //客栈id
+    @Column(name = "innid")
     private Integer innId;
     //商品来源
-    private String prosource;
+    @Column(name = "prosource")
+    private String proSource;
     //产品类型 0为产品 1为线路
-    private Integer protype;
+    @Column(name ="protype" )
+    private Integer proType;
     //产品名称
-    private String proname;
+    @Column(name = "proname")
+    private String proName;
     //产品封面
-    private String propic;
+    @Column(name = "propic")
+    private String proPic;
     //价格
+    @Column(name = "price")
     private BigDecimal price;
     //产品简介
+    @Column(name = "description")
     private String description;
     //产品内容
+    @Column(name = "content")
     private String content;
     //库存
+    @Column(name = "stock")
     private int stock;
     //销量
-    private String sales;
+    @Column(name = "sales")
+    private int sales;
     //返点
+    @Column(name = "rebate")
     private BigDecimal rebate;
+    @Column(name = "ratio")
     private BigDecimal ratio;
     //排序
+    @Column(name = "sort")
     private int sort;
     //是否显示
-    private int isshow;
+    @Column(name = "isshow")
+    private int isShow;
     //创建时间
-    private Date createtime;
+    @Column(name = "createtime")
+    private Date createTime;
 
     public Long getId() {
         return id;
@@ -62,36 +78,36 @@ public class Product {
         this.innId = innId;
     }
 
-    public String getProsource() {
-        return prosource;
+    public String getProSource() {
+        return proSource;
     }
 
-    public void setProsource(String prosource) {
-        this.prosource = prosource;
+    public void setProSource(String proSource) {
+        this.proSource = proSource;
     }
 
-    public Integer getProtype() {
-        return protype;
+    public Integer getProType() {
+        return proType;
     }
 
-    public void setProtype(Integer protype) {
-        this.protype = protype;
+    public void setProType(Integer proType) {
+        this.proType = proType;
     }
 
-    public String getProname() {
-        return proname;
+    public String getProName() {
+        return proName;
     }
 
-    public void setProname(String proname) {
-        this.proname = proname;
+    public void setProName(String proName) {
+        this.proName = proName;
     }
 
-    public String getPropic() {
-        return propic;
+    public String getProPic() {
+        return proPic;
     }
 
-    public void setPropic(String propic) {
-        this.propic = propic;
+    public void setProPic(String proPic) {
+        this.proPic = proPic;
     }
 
     public BigDecimal getPrice() {
@@ -126,11 +142,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public String getSales() {
+    public int getSales() {
         return sales;
     }
 
-    public void setSales(String sales) {
+    public void setSales(int sales) {
         this.sales = sales;
     }
 
@@ -142,6 +158,14 @@ public class Product {
         this.rebate = rebate;
     }
 
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
+    }
+
     public int getSort() {
         return sort;
     }
@@ -150,27 +174,19 @@ public class Product {
         this.sort = sort;
     }
 
-    public int getIsshow() {
-        return isshow;
+    public int getIsShow() {
+        return isShow;
     }
 
-    public void setIsshow(int isshow) {
-        this.isshow = isshow;
+    public void setIsShow(int isShow) {
+        this.isShow = isShow;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public BigDecimal getRatio() {
-        return ratio;
-    }
-
-    public void setRatio(BigDecimal ratio) {
-        this.ratio = ratio;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

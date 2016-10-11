@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomasky.fqxz.mapper.IProductOrderMapper">
+
+    <!-- 根据条件查询支付流水 -->
+    <select id="selectProductOrderByOrderNo" parameterType="java.lang.String" resultMap="productOrderMap">
+       SELECT  o.* from product_order o where o.order_no=#{orderNo}
+    </select>
+
+    <insert id="saveProductOrder" parameterType="com.tomasky.fqxz.vo.ProductOrderVo" useGeneratedKeys="true" keyProperty="id">
+         insert INTO  product_order(innid,contacts,phone,remark,order_no,pay_orderno,is_pay,is_failed,paytime,createtime,outtime)
+         VALUES (#{innId},#{contacts},#{phone},#{remark},#{orderNo},#{payOrderNo},#{isPay},#{isFailed},#{payTime},#{createTime},#{outTime});
+    </insert>
+
+
+    <resultMap type="com.tomasky.fqxz.model.ProductOrder" id="productOrderMap">
+        <result property="id" column="id"/>
+        <result property="innId" column="innid"/>
+        <result property="contacts" column="contacts"/>
+        <result property="phone" column="phone"/>
+        <result property="remark" column="remark"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="payOrderNo" column="pay_orderno"/>
+        <result property="isPay" column="is_pay"/>
+        <result property="isFailed" column="is_failed"/>
+        <result property="payTime" column="paytime"/>
+        <result property="createTime" column="createtime"/>
+        <result property="outTime" column="outtime"/>
+    </resultMap>
+
+</mapper>

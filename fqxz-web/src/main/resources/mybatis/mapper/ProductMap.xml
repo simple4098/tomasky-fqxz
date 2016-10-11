@@ -13,13 +13,21 @@
        SELECT  count(o.id) from product o where o.innid=#{innId} and o.isshow=1
     </select>
 
+    <select id="selectProductDetail" parameterType="com.tomasky.fqxz.bo.param.product.ProductBo" resultMap="productMap">
+         SELECT  o.* from product o where o.innid=#{innId} and o.id=#{id} and o.isshow=1
+    </select>
+
+    <update id="updateStockAndSales" parameterType="com.tomasky.fqxz.model.Product" >
+     UPDATE product set stock = ${stock},sales=#{sales} where id = ${id}
+    </update>
+
     <resultMap type="com.tomasky.fqxz.model.Product" id="productMap">
         <result property="id" column="id"/>
         <result property="innId" column="innid"/>
-        <result property="prosource" column="prosource"/>
-        <result property="protype" column="protype"/>
-        <result property="proname" column="proname"/>
-        <result property="propic" column="propic"/>
+        <result property="proSource" column="prosource"/>
+        <result property="proType" column="protype"/>
+        <result property="proName" column="proname"/>
+        <result property="proPic" column="propic"/>
         <result property="price" column="price"/>
         <result property="description" column="description"/>
         <result property="content" column="content"/>
@@ -28,8 +36,8 @@
         <result property="rebate" column="rebate"/>
         <result property="ratio" column="ratio"/>
         <result property="sort" column="sort"/>
-        <result property="isshow" column="isshow"/>
-        <result property="createtime" column="createtime"/>
+        <result property="isShow" column="isshow"/>
+        <result property="createTime" column="createtime"/>
     </resultMap>
 
 </mapper>

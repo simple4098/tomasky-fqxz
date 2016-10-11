@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomasky.fqxz.mapper.IOrderDetailMapper">
+
+    <!-- 根据条件查询支付流水 -->
+
+
+    <insert id="saveOrderDetail" parameterType="com.tomasky.fqxz.model.OrderDetail">
+        insert INTO  order_detail(oid,proid,price,num,totalprice,proname)
+        VALUES (#{oid},#{proId},#{price},#{num},#{totalPrice},#{proName});
+    </insert>
+
+
+    <resultMap type="com.tomasky.fqxz.model.OrderDetail" id="orderDetailMap">
+        <result property="id" column="id"/>
+        <result property="oid" column="oid"/>
+        <result property="proId" column="proid"/>
+        <result property="price" column="price"/>
+        <result property="num" column="num"/>
+        <result property="totalPrice" column="totalprice"/>
+        <result property="proName" column="proname"/>
+    </resultMap>
+
+</mapper>
