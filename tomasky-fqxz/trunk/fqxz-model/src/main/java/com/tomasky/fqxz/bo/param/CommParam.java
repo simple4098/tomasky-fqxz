@@ -17,6 +17,7 @@ public class CommParam {
     private Date to;
     private int pageNo = Constants.DEFAULT_PAGE_NO;
     private int pageSize = Constants.DEFAULT_PAGE_SIZE;
+    // 是否需要分页
     private boolean isPage;
 
     public Integer getInnId() {
