@@ -29,7 +29,6 @@ public class XzBaseInfoService {
         if (page.getTotalCount() == 0) {  //总数为0 无需继续查询详情
             return page;
         }
-        param.setPage(true);
         page.setResult(findList(param));
         return page;
     }

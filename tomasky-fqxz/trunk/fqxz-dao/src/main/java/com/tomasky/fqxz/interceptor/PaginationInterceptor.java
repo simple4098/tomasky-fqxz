@@ -3,6 +3,7 @@ package com.tomasky.fqxz.interceptor;
 
 import com.tomasky.fqxz.common.Constants;
 import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaObject;
@@ -32,27 +33,17 @@ public class PaginationInterceptor implements Interceptor {
         MetaObject metaStatementHandler = MetaObject.forObject(statementHandler, DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_OBJECT_DEL_FACTORY);
         Integer pageNo = (Integer) metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageNo");
         Integer pageSize = (Integer) metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageSize");
-        boolean isPage = (boolean) metaStatementHandler.getValue("delegate.boundSql.parameterObject.isPage");
-        if (pageNo == null || pageNo == Constants.DO_NOT_PAGE || !isPage) {
+        MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
+        String mapperId = mappedStatement.getId();
+        mapperId = mapperId.substring(mapperId.lastIndexOf(".") + 1);
+        if (mapperId.toUpperCase().indexOf("COUNT") != -1) {
+            return invocation.proceed();
+        }
+        if (pageNo == null || pageNo == Constants.DO_NOT_PAGE) {
             return invocation.proceed();
         }
         RowBounds rowBounds = new RowBounds((pageNo - 1) * pageSize, pageSize);
         String originalSql = (String) metaStatementHandler.getValue("delegate.boundSql.sql");
-//        DefaultParameterHandler defaultParameterHandler = (DefaultParameterHandler)metaStatementHandler.getValue("delegate.parameterHandler");
-//        Map parameterMap = (Map)defaultParameterHandler.getParameterObject();
-//        Object sidx = null;
-//        Object sord = null;
-//        if(parameterMap != null) {
-//        	sidx = parameterMap.get("_sidx");    
-//            sord = parameterMap.get("_sord");
-//        }
-//            
-//            
-//        
-//            
-//        if(sidx != null && sord != null){    
-//            originalSql = originalSql + " order by " + sidx + " " + sord;    
-//        }    
 
         Configuration configuration = (Configuration) metaStatementHandler.getValue("delegate.configuration");
 

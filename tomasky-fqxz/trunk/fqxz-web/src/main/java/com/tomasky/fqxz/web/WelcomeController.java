@@ -40,8 +40,7 @@ public class WelcomeController extends BaseController {
     private XzBaseinfoRepo xzBaseinfoRepo;
 
     @RequestMapping("/inns")
-    public Map<String, Object> getAllInns() {
-        XzBaseInfoBo param = new XzBaseInfoBo();
+    public Map<String, Object> getAllInns(XzBaseInfoBo param) {
         param.setPayType(1);
         return new200(xzBaseInfoService.getPageRecord(param));
     }
