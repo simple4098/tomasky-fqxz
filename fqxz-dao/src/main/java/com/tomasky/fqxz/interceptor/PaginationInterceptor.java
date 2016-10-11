@@ -17,26 +17,27 @@ import java.sql.Connection;
 import java.util.Properties;
 
 
-@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 public class PaginationInterceptor implements Interceptor {
 
     public static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
     public static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
     public static final DefaultReflectorFactory DEFAULT_OBJECT_DEL_FACTORY = new DefaultReflectorFactory();
 
-	/* (non-Javadoc)  
-	 * @see org.apache.ibatis.plugin.Interceptor#intercept(org.apache.ibatis.plugin.Invocation)  
-	 */    
+    /* (non-Javadoc)
+     * @see org.apache.ibatis.plugin.Interceptor#intercept(org.apache.ibatis.plugin.Invocation)
+     */
     public Object intercept(Invocation invocation) throws Throwable {
-        StatementHandler statementHandler = (StatementHandler)invocation.getTarget();    
+        StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         MetaObject metaStatementHandler = MetaObject.forObject(statementHandler, DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_OBJECT_DEL_FACTORY);
-        Integer pageNo = (Integer)metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageNo");
-        Integer pageSize = (Integer)metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageSize");
-        if(pageNo == null || pageNo == Constants.DO_NOT_PAGE){
+        Integer pageNo = (Integer) metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageNo");
+        Integer pageSize = (Integer) metaStatementHandler.getValue("delegate.boundSql.parameterObject.pageSize");
+        boolean isPage = (boolean) metaStatementHandler.getValue("delegate.boundSql.parameterObject.isPage");
+        if (pageNo == null || pageNo == Constants.DO_NOT_PAGE || !isPage) {
             return invocation.proceed();
         }
         RowBounds rowBounds = new RowBounds((pageNo - 1) * pageSize, pageSize);
-        String originalSql = (String)metaStatementHandler.getValue("delegate.boundSql.sql");    
+        String originalSql = (String) metaStatementHandler.getValue("delegate.boundSql.sql");
 //        DefaultParameterHandler defaultParameterHandler = (DefaultParameterHandler)metaStatementHandler.getValue("delegate.parameterHandler");
 //        Map parameterMap = (Map)defaultParameterHandler.getParameterObject();
 //        Object sidx = null;
@@ -52,52 +53,52 @@ public class PaginationInterceptor implements Interceptor {
 //        if(sidx != null && sord != null){    
 //            originalSql = originalSql + " order by " + sidx + " " + sord;    
 //        }    
-            
-        Configuration configuration = (Configuration)metaStatementHandler.getValue("delegate.configuration");
-            
-        Dialect.Type databaseType  = null;    
-        try{    
-            databaseType = Dialect.Type.valueOf(configuration.getVariables().getProperty("dialect").toUpperCase());    
-        } catch(Exception e){    
+
+        Configuration configuration = (Configuration) metaStatementHandler.getValue("delegate.configuration");
+
+        Dialect.Type databaseType = null;
+        try {
+            databaseType = Dialect.Type.valueOf(configuration.getVariables().getProperty("dialect").toUpperCase());
+        } catch (Exception e) {
             //ignore    
-        }    
-        if(databaseType == null){    
-            throw new RuntimeException("the value of the dialect property in mybatisConfig.xml is not defined : " + configuration.getVariables().getProperty("dialect"));    
-        }    
-        Dialect dialect = null;    
-        switch(databaseType){    
-            case ORACLE:    
-                dialect = new OracleDialect();    
-                break;    
+        }
+        if (databaseType == null) {
+            throw new RuntimeException("the value of the dialect property in mybatisConfig.xml is not defined : " + configuration.getVariables().getProperty("dialect"));
+        }
+        Dialect dialect = null;
+        switch (databaseType) {
+            case ORACLE:
+                dialect = new OracleDialect();
+                break;
             case MYSQL:
-            	dialect = new MySqlDialect();
-                break;    
+                dialect = new MySqlDialect();
+                break;
             case POSTGRESQL:
-            	dialect =new PostgresqlDialect();
-            	break;
-                    
-        }            
-            
-        metaStatementHandler.setValue("delegate.boundSql.sql", dialect.getLimitString(originalSql, rowBounds.getOffset(), rowBounds.getLimit()) );    
-        metaStatementHandler.setValue("delegate.rowBounds.offset", RowBounds.NO_ROW_OFFSET );    
-        metaStatementHandler.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT );    
-            
-        return invocation.proceed();    
-    }    
-    
+                dialect = new PostgresqlDialect();
+                break;
+
+        }
+
+        metaStatementHandler.setValue("delegate.boundSql.sql", dialect.getLimitString(originalSql, rowBounds.getOffset(), rowBounds.getLimit()));
+        metaStatementHandler.setValue("delegate.rowBounds.offset", RowBounds.NO_ROW_OFFSET);
+        metaStatementHandler.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT);
+
+        return invocation.proceed();
+    }
+
     /* (non-Javadoc)  
      * @see org.apache.ibatis.plugin.Interceptor#plugin(java.lang.Object)  
-     */    
+     */
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
-    
+
     /* (non-Javadoc)  
      * @see org.apache.ibatis.plugin.Interceptor#setProperties(java.util.Properties)  
-     */    
-    public void setProperties(Properties arg0) {    
+     */
+    public void setProperties(Properties arg0) {
         // TODO Auto-generated method stub    
-            
-    } 
+
+    }
 
 }

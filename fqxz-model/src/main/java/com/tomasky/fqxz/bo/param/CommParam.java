@@ -17,6 +17,7 @@ public class CommParam {
     private Date to;
     private int pageNo = Constants.DEFAULT_PAGE_NO;
     private int pageSize = Constants.DEFAULT_PAGE_SIZE;
+    private boolean isPage;
 
     public Integer getInnId() {
         return innId;
@@ -57,4 +58,13 @@ public class CommParam {
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
+
+    public boolean isPage() {
+        return isPage;
+    }
+
+    public void setPage(boolean page) {
+        isPage = page;
+    }
+
 }
