@@ -5,13 +5,13 @@ spring:
 oms:
   interface:
       getroomtype: http://oms.fanqiele.com/api/getRoomType
+  img:
+      host: http://img.fanqiele.com/
 
 xz:
   user:
     code: XZ
     pwd: xz123456
-  img:
-      host: http://img.fanqiele.com/
 
 pms:
   interface:
