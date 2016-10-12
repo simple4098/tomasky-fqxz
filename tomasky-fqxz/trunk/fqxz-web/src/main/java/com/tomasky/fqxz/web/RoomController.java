@@ -2,10 +2,14 @@ package com.tomasky.fqxz.web;
 
 import com.tomasky.fqxz.service.IRoomService;
 import com.tomasky.fqxz.service.XzBaseInfoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -28,15 +32,18 @@ public class RoomController {
     @Autowired
     IRoomService roomService;
 
-    @RequestMapping("/inn/payType")
-    public Map innPayType(Long innId) {
+    @ApiOperation(value = "查询付款方式", notes = "查询付款方式", httpMethod = "GET")
+    @RequestMapping(value = "/inn/payType", method = RequestMethod.GET)
+    public Map innPayType(@ApiParam(required = true, value = "客栈id") @RequestParam(name = "innId", value = "innId") Long innId) {
         logger.info("查询付款方式，参数：" + innId);
         return xzBaseInfoService.getInnPayType(innId);
     }
 
 
-    @RequestMapping("/recommend/room")
-    public Map recommendRoomList(Long innId) {
+    @ApiOperation(value = "查询精选房型列表", notes = "查询精选房型列表", httpMethod = "GET")
+    @RequestMapping(value = "/recommend/room", method = RequestMethod.GET)
+    public Map recommendRoomList(@ApiParam(required = true, value = "客栈id") @RequestParam(name = "innId", value = "innId") Long innId) {
+        logger.info("查询精选房型列表,参数:" + innId);
         return roomService.getRecommendRoomList(innId);
     }
 }
