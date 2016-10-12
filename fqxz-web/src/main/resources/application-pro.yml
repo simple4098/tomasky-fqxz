@@ -1,8 +1,18 @@
+spring:
+   profiles: pro
+
+---
 oms:
   interface:
       getroomtype: http://oms.fanqiele.com/api/getRoomType
+
+xz:
+  user:
+    code: XZ
+    pwd: xz123456
   img:
       host: http://img.fanqiele.com/
+
 pms:
   interface:
       innUrl: http://wwww.fanqiele.com/api/baseInfo/

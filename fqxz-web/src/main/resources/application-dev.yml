@@ -1,8 +1,28 @@
+spring:
+   profiles: dev
+   data:
+      jpa:
+        repositories:
+            enabled: true
+   datasource:
+          url: jdbc:postgresql://192.168.1.17:5432/xz_view
+          username: ota
+          password: ota
+          driver-class: org.postgresql.Driver
+   mvc:
+     view:
+       prefix: classpath:templates/
+       suffix: .html
+   jpa:
+     show-sql: true
+
+---
 oms:
   interface:
       getroomtype: http://oms.local.fanqiele.com/api/getRoomType
   img:
       host: http://img.local.fanqiele.com/
+
 pms:
   interface:
        innUrl: http://pms.local.fanqiele.com/api/baseInfo/

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.bo.param.ArticleDetailBo;
 import com.tomasky.fqxz.bo.param.ArticleListBo;
+import com.tomasky.fqxz.common.SysConfig;
 import com.tomasky.fqxz.mapper.IArticleMapper;
 import com.tomasky.fqxz.model.Article;
 import com.tomasky.fqxz.service.IArticleService;
@@ -33,6 +34,9 @@ public class ArticleServiceImpl implements IArticleService {
     @Autowired
     IArticleMapper articleMapper;
 
+    @Autowired
+    SysConfig sysConfig;
+
     @Override
     public Map getList(ArticleListBo articleListBo) {
         Map result;
@@ -43,6 +47,9 @@ public class ArticleServiceImpl implements IArticleService {
             }
             PageHelper.startPage(articleListBo.getPageNo(), articleListBo.getPageSize());
             List<Article> list = articleMapper.getList(articleListBo);
+            for (Article article : list) {
+                article.setCoverpict(sysConfig.getImgHost() + article.getCoverpict());
+            }
             PageInfo pageInfo = new PageInfo(list);
             result = ReturnHandler.success(pageInfo);
 
