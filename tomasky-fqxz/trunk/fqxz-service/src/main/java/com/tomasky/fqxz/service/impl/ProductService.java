@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.bo.param.CommParam;
 import com.tomasky.fqxz.bo.param.product.ProductBo;
 import com.tomasky.fqxz.bo.param.product.ProductOrderBo;
+import com.tomasky.fqxz.common.SysConfig;
 import com.tomasky.fqxz.common.exception.ProductException;
 import com.tomasky.fqxz.common.utils.ConfigUtil;
 import com.tomasky.fqxz.common.utils.DateUtil;
@@ -47,13 +48,17 @@ public class ProductService implements IProductService {
     private IProductOrderMapper productOrderMapper;
     @Resource
     private IOrderDetailMapper orderDetailMapper;
+    @Resource
+    private  InnHelper innHelper;
+    @Resource
+    private SysConfig sysConfig;
 
     @Override
     public PageInfo<Product> findProductByInnId(CommParam param) throws ProductException {
         Assert.notNull(param.getInnId());
         PageHelper.startPage(param.getPageNo(), param.getPageSize());
         List<Product> productList = productMapper.selectProductByInnId(param);
-        String imgHost = ConfigUtil.obtHost("img.host");
+        String imgHost =sysConfig.getImgHost();
         for (Product p : productList  ) {
             p.setProPic(imgHost+p.getProPic());
         }
@@ -64,14 +69,15 @@ public class ProductService implements IProductService {
     public ProductVo findProductDetail(ProductBo productBo) throws Exception{
         Assert.notNull(productBo.getInnId());
         Assert.notNull(productBo.getId());
-        String imgHost = ConfigUtil.obtHost("img.host");
+        String imgHost =sysConfig.getImgHost();
         Product product = productMapper.selectProductDetail(productBo);
         ProductVo productVo = new ProductVo();
         BeanUtils.copyProperties(productVo,product);
         productVo.setProPic(imgHost+product.getProPic());
         try {
-            PmsInnInfo pmsInnInfo = InnHelper.obtInnInfo(productBo.getInnId());
+            PmsInnInfo pmsInnInfo = innHelper.obtInnInfo(productBo.getInnId());
             productVo.setTel(pmsInnInfo.getReceiveMsgPhone1()+","+pmsInnInfo.getReceiveMsgPhone2());
+            productVo.setInnName(pmsInnInfo.getName());
         }catch (Exception e){
             logger.error("请求pms客栈基本信息出错",e);
         }
@@ -87,11 +93,8 @@ public class ProductService implements IProductService {
         }
         ProductOrderVo productOrderVo = new ProductOrderVo();
         BeanUtils.copyProperties(productOrderVo,productBo);
-        PmsInnInfo pmsInnInfo = null;
         try {
             Date date = new Date();
-            pmsInnInfo = InnHelper.obtInnInfo(productBo.getInnId());
-            productOrderVo.setInnName(pmsInnInfo.getName());
             productOrderVo.setOrderNo(orderNo);
             productOrderVo.setCreateTime(date);
             productOrderVo.setPayTime(date);

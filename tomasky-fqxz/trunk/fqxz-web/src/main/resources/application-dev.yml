@@ -1,6 +1,11 @@
 oms:
   interface:
       getroomtype: http://oms.local.fanqiele.com/api/getRoomType
+  img:
+      host: http://img.local.fanqiele.com/
+pms:
+  interface:
+       innUrl: http://pms.local.fanqiele.com/api/baseInfo/
 
 xz:
   user:
