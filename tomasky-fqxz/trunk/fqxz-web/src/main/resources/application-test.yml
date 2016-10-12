@@ -29,13 +29,13 @@ spring:
 oms:
   interface:
       getroomtype: http://openapi.test.fanqielaile.com/api/getRoomType
+  img:
+      host: http://img.test.fanqiele.com
 
 xz:
   user:
     code: XZ
     pwd: xz123456
-  img:
-      host: http://img.test.fanqiele.com
 
 pms:
    interface:
