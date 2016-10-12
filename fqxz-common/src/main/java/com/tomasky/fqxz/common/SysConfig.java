@@ -1,6 +1,7 @@
 package com.tomasky.fqxz.common;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +14,13 @@ import org.springframework.stereotype.Component;
 public class SysConfig {
 
     @Value("${oms.interface.getroomtype}")
-    private String omsRoomType;
+    private  String omsRoomType;
+
+    @Value("${oms.img.host}")
+    private  String imgHost;
+
+    @Value("${pms.interface.innUrl}")
+    private  String pmsInnUrl;
 
     @Value("${xz.user.code}")
     private String xzUserCode;
@@ -44,5 +51,21 @@ public class SysConfig {
 
     public void setOmsRoomType(String omsRoomType) {
         this.omsRoomType = omsRoomType;
+    }
+
+    public String getImgHost() {
+        return imgHost;
+    }
+
+    public void setImgHost(String imgHost) {
+        this.imgHost = imgHost;
+    }
+
+    public String getPmsInnUrl() {
+        return pmsInnUrl;
+    }
+
+    public void setPmsInnUrl(String pmsInnUrl) {
+        this.pmsInnUrl = pmsInnUrl;
     }
 }

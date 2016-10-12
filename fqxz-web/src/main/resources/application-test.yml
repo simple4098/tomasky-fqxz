@@ -1,3 +1,8 @@
 oms:
   interface:
       getroomtype: http://openapi.test.fanqielaile.com/api/getRoomType
+  img:
+      host: http://img.test.fanqiele.com
+pms:
+   interface:
+      innUrl: http://pms.test.fanqiele.com/api/baseInfo/
