@@ -14,7 +14,7 @@
     </select>
 
     <select id="selectProductDetail" parameterType="com.tomasky.fqxz.bo.param.product.ProductBo" resultMap="productMap">
-         SELECT  o.* from product o where o.innid=#{innId} and o.id=#{id} and o.isshow=1
+         SELECT  o.* from product o where  o.id=#{id} and o.isshow=1
     </select>
 
     <update id="updateStockAndSales" parameterType="com.tomasky.fqxz.model.Product" >

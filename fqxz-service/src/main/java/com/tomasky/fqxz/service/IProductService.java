@@ -34,4 +34,10 @@ public interface IProductService {
      * @throws ProductException
      */
     ProductOrderVo order(ProductOrderBo productBo) throws Exception;
+
+    /**
+     * 商品支付回调
+     * @param payResultJson 支付系统回调的json字符串
+     */
+    void orderCallback(String payResultJson);
 }

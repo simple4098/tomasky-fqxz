@@ -5,7 +5,11 @@ import com.tomasky.fqxz.bo.param.product.ProductBo;
 import com.tomasky.fqxz.model.Product;
 import com.tomasky.fqxz.model.ProductOrder;
 import com.tomasky.fqxz.vo.ProductOrderVo;
+import javassist.tools.reflect.Sample;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -22,4 +26,10 @@ public interface IProductOrderMapper {
     ProductOrder selectProductOrderByOrderNo(String orderNo);
 
     Integer saveProductOrder(ProductOrderVo productOrderVo);
+
+    @Select("select * from produnct_order where id=#{id}")
+    ProductOrder selectProductOrderById(@Param("id") Integer xzOrderId);
+
+    @Update(" UPDATE produnct_order set paytime = now(),is_pay='1',is_failed=#{isFailed},pay_orderno=#{payOrderNo} where id = #{id} ")
+    void updateProductOrder(ProductOrder productOrder);
 }

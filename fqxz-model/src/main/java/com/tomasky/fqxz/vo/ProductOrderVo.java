@@ -13,7 +13,25 @@ public class ProductOrderVo extends ProductOrderBo {
     private String innName;
     //支付过期时间
     private String payExpirationTime;
+    private String callbackUrl;
+    private Long xzOrderId;
+    private String bossPhone;
 
+    public String getBossPhone() {
+        return bossPhone;
+    }
+
+    public void setBossPhone(String bossPhone) {
+        this.bossPhone = bossPhone;
+    }
+
+    public Long getXzOrderId() {
+        return xzOrderId;
+    }
+
+    public void setXzOrderId(Long xzOrderId) {
+        this.xzOrderId = xzOrderId;
+    }
 
     public String getInnName() {
         return innName;
@@ -29,5 +47,13 @@ public class ProductOrderVo extends ProductOrderBo {
 
     public void setPayExpirationTime(String payExpirationTime) {
         this.payExpirationTime = payExpirationTime;
+    }
+
+    public String getCallbackUrl() {
+        return callbackUrl;
+    }
+
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
     }
 }

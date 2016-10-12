@@ -1,5 +1,6 @@
 package com.tomasky.fqxz.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class ProductOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     //客栈id
+    @Column(name = "innid")
     private Integer innId;
     //联系人
     private String contacts;
@@ -25,18 +27,25 @@ public class ProductOrder {
     //备注
     private String remark;
     //订单号
+    @Column(name = "order_no")
     private String orderNo;
     //支付订单号
+    @Column(name = "pay_orderno")
     private String payOrderNo;
     //0 未支付 1已经支付
+    @Column(name = "is_pay")
     private String isPay;
     //0为失效 1为生效
+    @Column(name = "is_failed")
     private String isFailed;
     //支付时间
+    @Column(name = "paytime")
     private Date payTime;
     //创建时间
+    @Column(name = "createtime")
     private Date createTime;
     //失效时间
+    @Column(name = "outtime")
     private Date outTime;
 
     public Long getId() {

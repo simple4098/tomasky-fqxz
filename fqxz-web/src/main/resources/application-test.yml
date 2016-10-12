@@ -36,6 +36,8 @@ xz:
   user:
     code: XZ
     pwd: xz123456
+  order:
+      orderCallbackUrl: http://localhost:8081/product/orderCallbackUrl
 
 pms:
    interface:

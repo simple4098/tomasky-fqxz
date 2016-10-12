@@ -28,6 +28,9 @@ public class SysConfig {
     @Value("${xz.user.pwd}")
     private String xzUserPwd;
 
+    @Value("${xz.order.orderCallbackUrl}")
+    private String orderCallbackUrl;
+
 
     public String getXzUserCode() {
         return xzUserCode;
@@ -67,5 +70,13 @@ public class SysConfig {
 
     public void setPmsInnUrl(String pmsInnUrl) {
         this.pmsInnUrl = pmsInnUrl;
+    }
+
+    public String getOrderCallbackUrl() {
+        return orderCallbackUrl;
+    }
+
+    public void setOrderCallbackUrl(String orderCallbackUrl) {
+        this.orderCallbackUrl = orderCallbackUrl;
     }
 }
