@@ -1,5 +1,6 @@
 package com.tomasky.fqxz.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tomasky.fqxz.bo.param.CommParam;
@@ -19,10 +20,15 @@ import com.tomasky.fqxz.model.OrderDetail;
 import com.tomasky.fqxz.model.Product;
 import com.tomasky.fqxz.model.ProductOrder;
 import com.tomasky.fqxz.service.IProductService;
+import com.tomasky.fqxz.vo.PayResultVo;
 import com.tomasky.fqxz.vo.PmsInnInfo;
 import com.tomasky.fqxz.vo.ProductOrderVo;
 import com.tomasky.fqxz.vo.ProductVo;
+import com.tomasky.msp.client.service.impl.MessageManageServiceImpl;
+import com.tomasky.msp.client.support.MessageBuilder;
+import com.tomasky.msp.enumeration.SmsChannel;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,6 +36,7 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,7 +77,7 @@ public class ProductService implements IProductService {
         Assert.notNull(productBo.getInnId());
         Assert.notNull(productBo.getId());
         String imgHost =sysConfig.getImgHost();
-        Product product = productMapper.selectProductDetail(productBo);
+        Product product = productMapper.selectProductDetailById(productBo.getId());
         ProductVo productVo = new ProductVo();
         BeanUtils.copyProperties(productVo,product);
         productVo.setProPic(imgHost+product.getProPic());
@@ -93,15 +100,23 @@ public class ProductService implements IProductService {
         }
         ProductOrderVo productOrderVo = new ProductOrderVo();
         BeanUtils.copyProperties(productOrderVo,productBo);
+        PmsInnInfo pmsInnInfo = null;
         try {
             Date date = new Date();
+            Date outTime = DateUtil.addMinutes(date, 30);
+            pmsInnInfo = innHelper.obtInnInfo(productBo.getInnId());
+            productOrderVo.setInnName(pmsInnInfo.getName());
             productOrderVo.setOrderNo(orderNo);
             productOrderVo.setCreateTime(date);
             productOrderVo.setPayTime(date);
-            productOrderVo.setOutTime(DateUtil.addMinutes(date,30));
+            productOrderVo.setOutTime(outTime);
             productOrderVo.setTotalPrice(productOrderVo.getPrice().multiply(new BigDecimal(productOrderVo.getNum())));
             productOrderVo.setIsFailed("0");
             productOrderVo.setIsPay("0");
+            productOrderVo.setPayExpirationTime(DateUtil.format(outTime,DateUtil.FORMAT_DATE_STR_ONE));
+            productOrderVo.setCallbackUrl(sysConfig.getOrderCallbackUrl());
+            productOrderVo.setXzOrderId(productOrderVo.getId());
+            productOrderVo.setBossPhone(pmsInnInfo.getReceiveMsgPhone1()+","+pmsInnInfo.getReceiveMsgPhone2());
             Integer productOrderId = productOrderMapper.saveProductOrder(productOrderVo);
             if (productOrderId!=null){
                 Product product = productDao.findById(productOrderVo.getProductId());
@@ -116,5 +131,35 @@ public class ProductService implements IProductService {
             throw new ProductException("请求pms客栈基本信息出错"+e.getMessage());
         }
         return productOrderVo;
+    }
+
+    @Override
+    public void orderCallback(String payResultJson) {
+        if (StringUtils.isNotEmpty(payResultJson)){
+            PayResultVo payResultVo = JSON.parseObject(payResultJson, PayResultVo.class);
+            //成功
+            ProductOrder productOrder =  productOrderMapper.selectProductOrderById(payResultVo.getXzOrderId());
+            Product product = productMapper.selectProductDetailById(payResultVo.getProductId());
+            if ("1".equals(payResultVo.getPayStatus())){
+               if (productOrder!=null){
+                   productOrder.setPayOrderNo(payResultVo.getOrderNo());
+                   productOrder.setIsFailed("1");
+                   productOrderMapper.updateProductOrder(productOrder);
+                   // TODO: 2016/10/12 发送短信
+                   List<String> receivers = new ArrayList<>();
+                   receivers.add(payResultVo.getPhone());
+                   new MessageManageServiceImpl().sendMessage(MessageBuilder.buildSmsMessage(receivers, SmsChannel.SEND_TYPE_AUTO, "测试短信发送"));
+
+               }
+            //失败
+            }else {
+                productOrder.setIsFailed("0");
+                productOrderMapper.updateProductOrder(productOrder);
+                product.setStock(product.getStock()+payResultVo.getNum());
+                product.setSales(product.getSales()-payResultVo.getNum());
+                productMapper.updateStockAndSales(product);
+            }
+        }
+
     }
 }
