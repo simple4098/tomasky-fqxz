@@ -50,11 +50,11 @@ spring:
 
 ---
 server:
-    port: 8080
+    port: 80
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*Map.xml
+  mapper-locations: classpath:mybatis/mapper/*Map.xml,classpath:mybatis/mapper/*Mapper.xml
 
 endpoints:
    shutdown:

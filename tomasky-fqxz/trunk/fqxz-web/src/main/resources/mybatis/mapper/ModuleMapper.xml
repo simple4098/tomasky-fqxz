@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomasky.fqxz.mapper.IModuleMapper">
+
+    <select id="selectByModel" parameterType="com.tomasky.fqxz.model.Module" resultType="com.tomasky.fqxz.model.Module">
+        select DISTINCT id,innid,name,alias,isshow,tip,sort from module where 1=1
+        <if test="innId!=null">
+            and innid=#{innId}
+        </if>
+    </select>
+</mapper>
