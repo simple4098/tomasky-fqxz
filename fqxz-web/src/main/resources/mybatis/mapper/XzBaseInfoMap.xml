@@ -54,7 +54,7 @@
         <result property="city" column="city"/>
     </resultMap>
     
-    <select id="getInnPayTypeAndKnows" parameterType="java.lang.Long" resultMap="XzBaseinfoMap">
-        select pay_type,must_known from xz_baseinfo where inn_id=#{innId}
+    <select id="getInnPayTypeAndKnowsAndAccount" parameterType="java.lang.Long" resultMap="XzBaseinfoMap">
+        select pay_type,must_known,accountid from xz_baseinfo where inn_id=#{innId}
     </select>
 </mapper>

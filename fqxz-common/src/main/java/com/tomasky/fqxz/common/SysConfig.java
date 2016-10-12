@@ -13,7 +13,30 @@ import org.springframework.stereotype.Component;
 public class SysConfig {
 
     @Value("${oms.interface.getroomtype}")
-    public String omsRoomType;
+    private String omsRoomType;
+
+    @Value("${xz.user.code}")
+    private String xzUserCode;
+
+    @Value("${xz.user.pwd}")
+    private String xzUserPwd;
+
+
+    public String getXzUserCode() {
+        return xzUserCode;
+    }
+
+    public void setXzUserCode(String xzUserCode) {
+        this.xzUserCode = xzUserCode;
+    }
+
+    public String getXzUserPwd() {
+        return xzUserPwd;
+    }
+
+    public void setXzUserPwd(String xzUserPwd) {
+        this.xzUserPwd = xzUserPwd;
+    }
 
     public String getOmsRoomType() {
         return omsRoomType;

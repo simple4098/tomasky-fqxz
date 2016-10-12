@@ -14,5 +14,5 @@ public interface XzBaseInfoMapper {
 
     Long getXzBaseInfosCount(XzBaseInfoBo param);
 
-    XzBaseinfo getInnPayTypeAndKnows(@Param("innId") Long innId);
+    XzBaseinfo getInnPayTypeAndKnowsAndAccount(@Param("innId") Long innId);
 }

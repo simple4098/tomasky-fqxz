@@ -1,3 +1,8 @@
 oms:
   interface:
       getroomtype: http://oms.local.fanqiele.com/api/getRoomType
+
+xz:
+  user:
+    code: XZ
+    pwd: xz123456
