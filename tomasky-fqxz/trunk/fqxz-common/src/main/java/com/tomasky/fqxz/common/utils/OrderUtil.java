@@ -1,8 +1,13 @@
 package com.tomasky.fqxz.common.utils;
 
 import com.tomasky.fqxz.common.utils.string.RandomUtil;
+import com.tomasky.msp.client.service.impl.MessageManageServiceImpl;
+import com.tomasky.msp.client.support.MessageBuilder;
+import com.tomasky.msp.enumeration.SmsChannel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author simple
@@ -20,5 +25,11 @@ public class OrderUtil {
 
     public static void main(String[] args) {
         System.out.println(obtOrderNo());
+    }
+
+    public static void sendMsg(String phone, String s) {
+        List<String> receivers = new ArrayList<>();
+        receivers.add(phone);
+        new MessageManageServiceImpl().sendMessage(MessageBuilder.buildSmsMessage(receivers, SmsChannel.SEND_TYPE_AUTO, s));
     }
 }
