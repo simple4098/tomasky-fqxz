@@ -1,10 +1,14 @@
 package com.tomasky.fqxz.web;
 
 import com.tomasky.fqxz.service.IShopRecommendService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -24,8 +28,9 @@ public class ShopRecommendController {
     @Autowired
     IShopRecommendService shopRecommendService;
 
-    @RequestMapping("/recommend")
-    public Map shopRecommendList(Long innId) {
+    @ApiOperation(value = "查询分店推荐", notes = "查询分店推荐", httpMethod = "GET")
+    @RequestMapping(value = "/recommend", method = RequestMethod.GET)
+    public Map shopRecommendList(@ApiParam(required = true, value = "客栈id") @RequestParam(name = "innId", value = "innId") Long innId) {
         logger.info("查询分店推荐，参数：" + innId);
         return shopRecommendService.getShopRecommendList(innId);
     }
