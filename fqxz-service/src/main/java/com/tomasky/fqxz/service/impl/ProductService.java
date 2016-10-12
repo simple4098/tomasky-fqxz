@@ -8,7 +8,6 @@ import com.tomasky.fqxz.bo.param.product.ProductBo;
 import com.tomasky.fqxz.bo.param.product.ProductOrderBo;
 import com.tomasky.fqxz.common.SysConfig;
 import com.tomasky.fqxz.common.exception.ProductException;
-import com.tomasky.fqxz.common.utils.ConfigUtil;
 import com.tomasky.fqxz.common.utils.DateUtil;
 import com.tomasky.fqxz.common.utils.OrderUtil;
 import com.tomasky.fqxz.dao.IProductDao;
@@ -24,9 +23,6 @@ import com.tomasky.fqxz.vo.PayResultVo;
 import com.tomasky.fqxz.vo.PmsInnInfo;
 import com.tomasky.fqxz.vo.ProductOrderVo;
 import com.tomasky.fqxz.vo.ProductVo;
-import com.tomasky.msp.client.service.impl.MessageManageServiceImpl;
-import com.tomasky.msp.client.support.MessageBuilder;
-import com.tomasky.msp.enumeration.SmsChannel;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,7 +32,6 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -146,9 +141,7 @@ public class ProductService implements IProductService {
                    productOrder.setIsFailed("1");
                    productOrderMapper.updateProductOrder(productOrder);
                    // TODO: 2016/10/12 发送短信
-                   List<String> receivers = new ArrayList<>();
-                   receivers.add(payResultVo.getPhone());
-                   new MessageManageServiceImpl().sendMessage(MessageBuilder.buildSmsMessage(receivers, SmsChannel.SEND_TYPE_AUTO, "测试短信发送"));
+                   OrderUtil.sendMsg(payResultVo.getPhone(),"send msg 。。。");
 
                }
             //失败
