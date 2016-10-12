@@ -34,7 +34,7 @@ public class XzBaseInfoService {
 
 
     public Map getInnPayType(Long innId) {
-        XzBaseinfo xzBaseinfo = xzBaseInfoMapper.getInnPayTypeAndKnows(innId);
+        XzBaseinfo xzBaseinfo = xzBaseInfoMapper.getInnPayTypeAndKnowsAndAccount(innId);
         return ReturnHandler.success(xzBaseinfo);
     }
 }
