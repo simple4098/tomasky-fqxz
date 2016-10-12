@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomasky.fqxz.mapper.IArticleMapper">
+
+    <select id="getList" parameterType="com.tomasky.fqxz.bo.param.ArticleListBo"
+            resultType="com.tomasky.fqxz.model.Article">
+        select id,title,coverpict,description,sort from article where
+        1=1 and isshow=1 and innid=#{innId} order by sort desc
+    </select>
+
+    <select id="getListCount" parameterType="com.tomasky.fqxz.bo.param.ArticleListBo"
+            resultType="java.lang.Integer">
+        select count(id) from article where
+        1=1 and isshow=1 and innid=#{innId}
+    </select>
+
+    <select id="getDetail" parameterType="com.tomasky.fqxz.bo.param.ArticleDetailBo"
+            resultType="com.tomasky.fqxz.model.Article">
+        select id,title,description,content,createtime from article where
+        1=1 and isshow=1 and id=#{articleId} and innId=#{innId} limit 1
+    </select>
+</mapper>

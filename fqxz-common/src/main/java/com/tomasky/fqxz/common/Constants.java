@@ -30,6 +30,7 @@ public class Constants {
     public final static String STATUS = "status";
     public final static String PAGE = "page";
     public final static String MESSAGE = "message";
+    public final static String MSG = "msg";
     public final static String ERRORS = "errors";
     public final static String RESULT = "result";
     public final static String NOTHING = "nothing";

@@ -1,0 +1,3 @@
+oms:
+  interface:
+      getroomtype: http://oms.fanqiele.com/api/getRoomType
