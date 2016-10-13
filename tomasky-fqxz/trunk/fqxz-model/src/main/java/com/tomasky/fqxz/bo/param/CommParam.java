@@ -18,6 +18,15 @@ public class CommParam {
     private int pageNo = Constants.DEFAULT_PAGE_NO;
     private int pageSize = Constants.DEFAULT_PAGE_SIZE;
 
+    public CommParam() {
+    }
+
+    public CommParam(Integer innId, int pageNo, int pageSize) {
+        this.innId = innId;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
+
     public Integer getInnId() {
         return innId;
     }
