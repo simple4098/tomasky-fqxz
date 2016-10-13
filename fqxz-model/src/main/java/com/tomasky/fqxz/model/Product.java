@@ -22,10 +22,10 @@ public class Product {
     private Integer innId;
     //商品来源
     @Column(name = "prosource")
-    private String proSource;
+    private int proSource;
     //产品类型 0为产品 1为线路
     @Column(name ="protype" )
-    private Integer proType;
+    private int proType;
     //产品名称
     @Column(name = "proname")
     private String proName;
@@ -78,19 +78,19 @@ public class Product {
         this.innId = innId;
     }
 
-    public String getProSource() {
+    public int getProSource() {
         return proSource;
     }
 
-    public void setProSource(String proSource) {
+    public void setProSource(int proSource) {
         this.proSource = proSource;
     }
 
-    public Integer getProType() {
+    public int getProType() {
         return proType;
     }
 
-    public void setProType(Integer proType) {
+    public void setProType(int proType) {
         this.proType = proType;
     }
 

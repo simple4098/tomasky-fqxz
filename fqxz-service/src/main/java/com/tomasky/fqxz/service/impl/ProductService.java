@@ -27,7 +27,10 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
@@ -54,6 +57,8 @@ public class ProductService implements IProductService {
     private  InnHelper innHelper;
     @Resource
     private SysConfig sysConfig;
+    @Resource
+    private MessageSourceAccessor messageSourceAccessor;
 
     @Override
     public PageInfo<Product> findProductByInnId(CommParam param) throws ProductException {
@@ -81,17 +86,18 @@ public class ProductService implements IProductService {
             productVo.setTel(pmsInnInfo.getReceiveMsgPhone1()+","+pmsInnInfo.getReceiveMsgPhone2());
             productVo.setInnName(pmsInnInfo.getName());
         }catch (Exception e){
-            logger.error("请求pms客栈基本信息出错",e);
+            logger.error(messageSourceAccessor.getMessage("xz.innInfo.error"),e);
         }
         return productVo;
     }
 
+    @Transactional
     @Override
     public ProductOrderVo order(ProductOrderBo productBo) throws Exception {
         String orderNo = OrderUtil.obtOrderNo();
         ProductOrder productOrder = productOrderMapper.selectProductOrderByOrderNo(orderNo);
         if (productOrder!=null){
-            throw new ProductException("请不要重复提交订单");
+            throw new ProductException( messageSourceAccessor.getMessage("xz.order.repeat"));
         }
         ProductOrderVo productOrderVo = new ProductOrderVo();
         BeanUtils.copyProperties(productOrderVo,productBo);
@@ -103,17 +109,16 @@ public class ProductService implements IProductService {
             productOrderVo.setInnName(pmsInnInfo.getName());
             productOrderVo.setOrderNo(orderNo);
             productOrderVo.setCreateTime(date);
-            productOrderVo.setPayTime(date);
             productOrderVo.setOutTime(outTime);
             productOrderVo.setTotalPrice(productOrderVo.getPrice().multiply(new BigDecimal(productOrderVo.getNum())));
             productOrderVo.setIsFailed("0");
             productOrderVo.setIsPay("0");
             productOrderVo.setPayExpirationTime(DateUtil.format(outTime,DateUtil.FORMAT_DATE_STR_ONE));
             productOrderVo.setCallbackUrl(sysConfig.getOrderCallbackUrl());
-            productOrderVo.setXzOrderId(productOrderVo.getId());
             productOrderVo.setBossPhone(pmsInnInfo.getReceiveMsgPhone1()+","+pmsInnInfo.getReceiveMsgPhone2());
             Integer productOrderId = productOrderMapper.saveProductOrder(productOrderVo);
             if (productOrderId!=null){
+                productOrderVo.setXzOrderId(productOrderVo.getId());
                 Product product = productDao.findById(productOrderVo.getProductId());
                 product.setStock(product.getStock()-productOrderVo.getNum());
                 int i = product.getSales()+ productOrderVo.getNum();
@@ -122,14 +127,16 @@ public class ProductService implements IProductService {
                 orderDetailMapper.saveOrderDetail(new OrderDetail(productOrderVo.getId(),productOrderVo.getProductId(),productOrderVo.getPrice(),productOrderVo.getNum(),productOrderVo.getTotalPrice(),product.getProName()));
             }
         } catch (Exception e) {
-            logger.error("请求pms客栈基本信息出错",e);
-            throw new ProductException("请求pms客栈基本信息出错"+e.getMessage());
+            String message = messageSourceAccessor.getMessage("xz.order.error");
+            logger.error(message,e);
+            throw new ProductException(message+e);
         }
         return productOrderVo;
     }
 
+    @Transactional(rollbackFor=Exception.class)
     @Override
-    public void orderCallback(String payResultJson) {
+    public void orderCallback(String payResultJson)throws ProductException {
         if (StringUtils.isNotEmpty(payResultJson)){
             PayResultVo payResultVo = JSON.parseObject(payResultJson, PayResultVo.class);
             //成功
@@ -140,9 +147,10 @@ public class ProductService implements IProductService {
                    productOrder.setPayOrderNo(payResultVo.getOrderNo());
                    productOrder.setIsFailed("1");
                    productOrderMapper.updateProductOrder(productOrder);
-                   // TODO: 2016/10/12 发送短信
-                   OrderUtil.sendMsg(payResultVo.getPhone(),"send msg 。。。");
-
+                   //String msg = "您已经成功购买 ".$brandName." ".$proName." ".$proNum."件；订单金额：".$totalprice."元，已付金额：".$totalprice."元。客栈联系电话：".$bossPhone."； 订单号：".$payOrderNo."；请自行联系客栈商讨收货等相关事宜。";
+                   String msg = messageSourceAccessor.getMessage("xz.order.message",new Object[]{payResultVo.getInnName(), payResultVo.getProName(),new Integer(payResultVo.getNum())
+                           ,payResultVo.getTotalPrice(),payResultVo.getTotalPrice(),payResultVo.getBossPhone(),payResultVo.getOrderNo()});
+                   OrderUtil.sendMsg(payResultVo.getPhone(),msg);
                }
             //失败
             }else {

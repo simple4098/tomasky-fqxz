@@ -53,11 +53,12 @@ public class ProductController extends BaseController {
     @Autowired
     private XzBaseinfoRepo xzBaseinfoRepo;
 
-    @ApiOperation(value = "查询精品商品列表", notes = "查询精品商品列表", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiImplicitParam(name = "commParam", value = "接收参数实体CommParam", required = true, dataType = "CommParam")
-    @RequestMapping(value = "/list" ,method = RequestMethod.POST)
-    public Map getAllInns( @RequestBody CommParam commParam) {
+    @ApiOperation(value = "查询精品商品列表", notes = "查询精品商品列表", httpMethod = "GET")
+   /* @ApiImplicitParam(name = "commParam", value = "接收参数实体CommParam", required = true, dataType = "CommParam")*/
+    @RequestMapping(value = "/list" ,method = RequestMethod.GET)
+    public Map getAllInns(@RequestParam Integer innId,@RequestParam int pageNo,@RequestParam int pageSize) {
         try {
+            CommParam commParam = new CommParam(innId,pageNo,pageSize);
             PageInfo<Product> productByInnId = productService.findProductByInnId(commParam);
             return new200(productByInnId);
         } catch (Exception e) {
@@ -97,13 +98,17 @@ public class ProductController extends BaseController {
     @ApiImplicitParam(name = "payResultJson", value = "接收参数实体payResultJson", required = true, dataType = "payResultJson")
     @RequestMapping(value = "/orderCallbackUrl",method = RequestMethod.POST)
     public Map<String,Object> orderCallbackUrl(@RequestBody String payResultJson){
-         productService.orderCallback(payResultJson);
-         return new200();
+        try{
+            productService.orderCallback(payResultJson);
+            return new200();
+        }catch (Exception e){
+            return new500(e);
+        }
     }
 
-    @RequestMapping(value = "/one",method = RequestMethod.GET)
+    /*@RequestMapping(value = "/one",method = RequestMethod.GET)
     public Map<String, Object> getOne() {
         return new200(xzBaseinfoRepo.findById(3611l));
-    }
+    }*/
 
 }

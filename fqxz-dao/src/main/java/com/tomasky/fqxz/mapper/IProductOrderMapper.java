@@ -27,9 +27,9 @@ public interface IProductOrderMapper {
 
     Integer saveProductOrder(ProductOrderVo productOrderVo);
 
-    @Select("select * from produnct_order where id=#{id}")
+    @Select("select * from product_order where id=#{id}")
     ProductOrder selectProductOrderById(@Param("id") Integer xzOrderId);
 
-    @Update(" UPDATE produnct_order set paytime = now(),is_pay='1',is_failed=#{isFailed},pay_orderno=#{payOrderNo} where id = #{id} ")
+    @Update(" UPDATE product_order set paytime = now(),is_pay='1',is_failed=#{isFailed},pay_orderno=#{payOrderNo} where id = #{id} ")
     void updateProductOrder(ProductOrder productOrder);
 }

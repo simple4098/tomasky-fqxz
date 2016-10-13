@@ -28,6 +28,15 @@ public class PayResultVo {
     private String innName;
     //商品id
     private Integer productId;
+    private String bossPhone;
+
+    public String getBossPhone() {
+        return bossPhone;
+    }
+
+    public void setBossPhone(String bossPhone) {
+        this.bossPhone = bossPhone;
+    }
 
     public Integer getProductId() {
         return productId;
