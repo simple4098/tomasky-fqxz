@@ -29,6 +29,7 @@ public class SwaggerFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        response.setHeader("Access-Control-Allow-Origin", "*");
         String sys = System.getProperty("spring.profiles.active");
         String uri = request.getRequestURI();
         if (sys.contains("pro") && uri.contains("swagger")) {

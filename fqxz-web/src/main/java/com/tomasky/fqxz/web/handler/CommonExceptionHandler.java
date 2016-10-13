@@ -31,6 +31,7 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
 
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+		response.setContentType("application/json;charset=UTF-8");
 		Result result = null;
 		if (BusinessException.class.isAssignableFrom(ex.getClass())) {
 			// 业务异常
@@ -77,7 +78,6 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
 
 	private void returnRes(HttpServletRequest request, HttpServletResponse response, Result result) {
 		try {
-			response.setContentType("application/json;charset=UTF-8");
 			StringBuffer responseSb = new StringBuffer();
 			log.info("[<--返回][url=" + request.getServletPath() + "][status=" + result.getStatus() + "][msg=" + result.getMessage() + "][data=:" + JSON.toJSONString(result.getData()) + "]");
 			if (URLUtils.isJsonp(request)) {
