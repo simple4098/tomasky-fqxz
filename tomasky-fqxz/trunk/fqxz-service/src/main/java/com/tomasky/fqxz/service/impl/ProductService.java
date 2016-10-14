@@ -62,7 +62,7 @@ public class ProductService implements IProductService {
 
     @Override
     public PageInfo<Product> findProductByInnId(CommParam param) throws ProductException {
-        Assert.notNull(param.getInnId());
+        Assert.notNull(param.getInnId(),messageSourceAccessor.getMessage("xz.product.innId.error"));
         PageHelper.startPage(param.getPageNo(), param.getPageSize());
         List<Product> productList = productMapper.selectProductByInnId(param);
         String imgHost =sysConfig.getImgHost();
@@ -74,8 +74,8 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductVo findProductDetail(ProductBo productBo) throws Exception{
-        Assert.notNull(productBo.getInnId());
-        Assert.notNull(productBo.getId());
+        Assert.notNull(productBo.getInnId(),messageSourceAccessor.getMessage("xz.product.innId.error"));
+        Assert.notNull(productBo.getId(),messageSourceAccessor.getMessage("xz.product.productId.error"));
         String imgHost =sysConfig.getImgHost();
         Product product = productMapper.selectProductDetailById(productBo.getId());
         ProductVo productVo = new ProductVo();
@@ -95,6 +95,11 @@ public class ProductService implements IProductService {
     @Override
     public ProductOrderVo order(ProductOrderBo productBo) throws Exception {
         String orderNo = OrderUtil.obtOrderNo();
+        try{
+            productBo.assertNotNull();
+        }catch (Exception e){
+            throw new ProductException( messageSourceAccessor.getMessage("xz.order.param.error"));
+        }
         ProductOrder productOrder = productOrderMapper.selectProductOrderByOrderNo(orderNo);
         if (productOrder!=null){
             throw new ProductException( messageSourceAccessor.getMessage("xz.order.repeat"));
@@ -116,16 +121,21 @@ public class ProductService implements IProductService {
             productOrderVo.setPayExpirationTime(DateUtil.format(outTime,DateUtil.FORMAT_DATE_STR_ONE));
             productOrderVo.setCallbackUrl(sysConfig.getOrderCallbackUrl());
             productOrderVo.setBossPhone(pmsInnInfo.getReceiveMsgPhone1()+","+pmsInnInfo.getReceiveMsgPhone2());
-            Integer productOrderId = productOrderMapper.saveProductOrder(productOrderVo);
-            if (productOrderId!=null){
-                productOrderVo.setXzOrderId(productOrderVo.getId());
-                Product product = productDao.findById(productOrderVo.getProductId());
-                product.setStock(product.getStock()-productOrderVo.getNum());
-                int i = product.getSales()+ productOrderVo.getNum();
-                product.setSales(i);
-                productMapper.updateStockAndSales(product);
-                orderDetailMapper.saveOrderDetail(new OrderDetail(productOrderVo.getId(),productOrderVo.getProductId(),productOrderVo.getPrice(),productOrderVo.getNum(),productOrderVo.getTotalPrice(),product.getProName()));
+            Product product = productDao.findById(productOrderVo.getProductId());
+            if (product!=null){
+                BigDecimal subtract = product.getPrice().subtract(productOrderVo.getPrice());
+                if(!subtract.equals(new BigDecimal(0))){
+                    throw new ProductException(messageSourceAccessor.getMessage("xz.order.param.price"));
+                }
             }
+            productOrderMapper.saveProductOrder(productOrderVo);
+            productOrderVo.setXzOrderId(productOrderVo.getId());
+            product.setStock(product.getStock()-productOrderVo.getNum());
+            int i = product.getSales()+ productOrderVo.getNum();
+            product.setSales(i);
+            productMapper.updateStockAndSales(product);
+            orderDetailMapper.saveOrderDetail(new OrderDetail(productOrderVo.getId(),productOrderVo.getProductId(),productOrderVo.getPrice(),productOrderVo.getNum(),productOrderVo.getTotalPrice(),product.getProName()));
+
         } catch (Exception e) {
             String message = messageSourceAccessor.getMessage("xz.order.error");
             logger.error(message,e);

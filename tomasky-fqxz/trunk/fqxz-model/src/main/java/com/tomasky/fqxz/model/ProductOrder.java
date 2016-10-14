@@ -48,6 +48,16 @@ public class ProductOrder {
     @Column(name = "outtime")
     private Date outTime;
 
+    public ProductOrder() {
+    }
+
+    public ProductOrder(Integer innId, String contacts, String phone, String remark) {
+        this.innId = innId;
+        this.contacts = contacts;
+        this.phone = phone;
+        this.remark = remark;
+    }
+
     public Long getId() {
         return id;
     }
