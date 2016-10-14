@@ -42,21 +42,22 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
 			if (bex.getStatus() != null) {
 				result.setStatus(bex.getStatus());
 			}
-			log.info("CommonExceptionHandler catche the BusinessException : ", bex.getMsg());
-		}else if (RpcException.class.isAssignableFrom(ex.getClass())) {
+			log.warn("CommonExceptionHandler catche the BusinessException : ", bex.getMsg());
+		} else if(SystemException.class.isAssignableFrom(ex.getClass())){
+			// 系统错误
+			SystemException sex = (SystemException) ex;
+			result = new Result(ResultCode.COMMEN_SYSTEM_EXCEPTION, false);
+			result.setMessage(sex.getMsg());
+			log.error("CommonExceptionHandler catche the System Error, ", ex);
+		} else if (RpcException.class.isAssignableFrom(ex.getClass())) {
 			// dubbo远程调用异常
 			result = new Result(ResultCode.COMMON_SYSTEM_RPC_EXCEPTION, false);
 			log.error("CommonExceptionHandler catche the RPCException, ", ex);
-		} else if(SystemException.class.isAssignableFrom(ex.getClass())){
-			// 系统错误
-			result = new Result(ResultCode.COMMEN_SYSTEM_EXCEPTION, false);
-			log.error("CommonExceptionHandler catche the System Error, ", ex);
-		}else {
+		} else {
 			// 其他系统错误
 			result = new Result(ResultCode.OTHER_EXCEPTION, false);
 			log.error("CommonExceptionHandler catche the Other Error, ", ex);
 		}
-
 		String requestHeader = request.getHeader("Accept");
 		response.setCharacterEncoding("UTF-8");
 		boolean isAjaxUrl = request.getHeader("X-Requested-With") != null && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString());
@@ -79,7 +80,11 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
 	private void returnRes(HttpServletRequest request, HttpServletResponse response, Result result) {
 		try {
 			StringBuffer responseSb = new StringBuffer();
-			log.info("[<--返回][url=" + request.getServletPath() + "][status=" + result.getStatus() + "][msg=" + result.getMessage() + "][data=:" + JSON.toJSONString(result.getData()) + "]");
+			long startTimeValue = (long) request.getAttribute("startTimeValue");
+			long endTimeValue = System.currentTimeMillis();
+			long time = endTimeValue-startTimeValue;
+			log.info("[<--返回][url={}][totalTime={}ms][status={}][msg={}][data={}]",request.getServletPath(),time,result.getStatus(),result.getMessage(),JSON.toJSONString(result.getData()));
+
 			if (URLUtils.isJsonp(request)) {
 				String callback = request.getParameter("callback");
 				responseSb.append("(").append(callback).append(toJSONString(result)).append(")");
