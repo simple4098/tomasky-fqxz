@@ -127,6 +127,9 @@ public class ProductService implements IProductService {
                 if(!subtract.equals(new BigDecimal(0))){
                     throw new ProductException(messageSourceAccessor.getMessage("xz.order.param.price"));
                 }
+                if (product.getStock()<=0){
+                    throw new ProductException(messageSourceAccessor.getMessage("xz.order.param.stock"));
+                }
             }
             productOrderMapper.saveProductOrder(productOrderVo);
             productOrderVo.setXzOrderId(productOrderVo.getId());
