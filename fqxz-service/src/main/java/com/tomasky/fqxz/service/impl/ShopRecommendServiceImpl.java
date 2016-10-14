@@ -28,9 +28,6 @@ public class ShopRecommendServiceImpl implements IShopRecommendService {
     @Autowired
     IShopRecommendMapper shopRecommendMapper;
 
-    @Autowired
-
-
     @Override
     public Map getShopRecommendList(Long innId) {
         ShopRecommend shopRecommend = new ShopRecommend();
