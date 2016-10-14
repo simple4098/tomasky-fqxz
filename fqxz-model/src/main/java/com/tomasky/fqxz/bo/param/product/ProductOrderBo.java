@@ -3,6 +3,7 @@ package com.tomasky.fqxz.bo.param.product;
 import com.tomasky.fqxz.bo.param.CommParam;
 import com.tomasky.fqxz.model.Product;
 import com.tomasky.fqxz.model.ProductOrder;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 
@@ -17,6 +18,18 @@ public class ProductOrderBo extends ProductOrder{
     private String proName;
     private BigDecimal totalPrice;
     private Long productId;
+
+    public ProductOrderBo(Integer innId, String contacts, String phone, String remark, Integer num, BigDecimal price, String proName, BigDecimal totalPrice, Long productId) {
+        super(innId, contacts, phone, remark);
+        this.num = num;
+        this.price = price;
+        this.proName = proName;
+        this.totalPrice = totalPrice;
+        this.productId = productId;
+    }
+
+    public ProductOrderBo() {
+    }
 
     public Long getProductId() {
         return productId;
@@ -53,5 +66,17 @@ public class ProductOrderBo extends ProductOrder{
     }
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public void assertNotNull(){
+        Assert.notNull(this);
+        Assert.notNull(getContacts());
+        Assert.notNull(getNum());
+        Assert.notNull(getProductId());
+        Assert.notNull(getProName());
+        Assert.notNull(getPrice());
+        Assert.notNull(getTotalPrice());
+        Assert.notNull(getInnId());
+        Assert.notNull(getPhone());
     }
 }

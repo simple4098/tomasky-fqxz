@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
@@ -56,7 +57,9 @@ public class ProductController extends BaseController {
     @ApiOperation(value = "查询精品商品列表", notes = "查询精品商品列表", httpMethod = "GET")
    /* @ApiImplicitParam(name = "commParam", value = "接收参数实体CommParam", required = true, dataType = "CommParam")*/
     @RequestMapping(value = "/list" ,method = RequestMethod.GET)
-    public Map getAllInns(@RequestParam Integer innId,@RequestParam int pageNo,@RequestParam int pageSize) {
+    public Map getAllInns(@RequestParam Integer innId,
+                          @RequestParam(required = false,defaultValue = "1") int pageNo,
+                          @RequestParam(required = false,defaultValue = "10")  int pageSize) {
         try {
             CommParam commParam = new CommParam(innId,pageNo,pageSize);
             PageInfo<Product> productByInnId = productService.findProductByInnId(commParam);
@@ -85,8 +88,17 @@ public class ProductController extends BaseController {
     @ApiOperation(value = "精品商品下单", notes = "精品商品下单", httpMethod = "POST")
     @ApiImplicitParam(name = "productOrderBo", value = "接收参数实体ProductOrderBo", required = true, dataType = "ProductOrderBo")
     @RequestMapping(value = "/order",method = RequestMethod.POST)
-    public Map<String,Object> productOrder(@RequestBody ProductOrderBo productOrderBo){
+    public Map<String,Object> productOrder(@ApiParam(required = true, value = "联系人") @RequestParam(name = "contacts", value = "contacts") String contacts,
+                                           @ApiParam(required = true, value = "客栈id") @RequestParam(name = "innId", value = "innId")  Integer innId ,
+                                           @ApiParam(required = true, value = "商品数量") @RequestParam(name = "num", value = "num") Integer num ,
+                                           @ApiParam(required = true, value = "联系电话") @RequestParam(name = "phone", value = "phone") String phone ,
+                                           @ApiParam(required = true, value = "商品名称") @RequestParam(name = "proName", value = "proName") String proName,
+                                           @ApiParam(required = true, value = "商品价格") @RequestParam(name = "price", value = "price") BigDecimal price ,
+                                           @ApiParam(required = true, value = "商品id") @RequestParam(name = "productId", value = "productId") Long productId ,
+                                           @ApiParam(required = false, value = "备注") @RequestParam(name = "remark", value = "remark") String remark ,
+                                           @ApiParam(required = true, value = "总价") @RequestParam(name = "totalPrice", value = "totalPrice") BigDecimal totalPrice){
         try {
+            ProductOrderBo productOrderBo = new ProductOrderBo(innId,contacts,phone,remark,num,price,proName,totalPrice,productId);
             ProductOrderVo order = productService.order(productOrderBo);
             return new200(order);
         } catch (Exception e) {
