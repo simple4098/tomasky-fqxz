@@ -86,7 +86,7 @@ public class ProductController extends BaseController {
     }
 
     @ApiOperation(value = "精品商品下单", notes = "精品商品下单", httpMethod = "POST")
-    @ApiImplicitParam(name = "productOrderBo", value = "接收参数实体ProductOrderBo", required = true, dataType = "ProductOrderBo")
+   /* @ApiImplicitParam(name = "productOrderBo", value = "接收参数实体ProductOrderBo", required = true, dataType = "ProductOrderBo")*/
     @RequestMapping(value = "/order",method = RequestMethod.POST)
     public Map<String,Object> productOrder(@ApiParam(required = true, value = "联系人") @RequestParam(name = "contacts", value = "contacts") String contacts,
                                            @ApiParam(required = true, value = "客栈id") @RequestParam(name = "innId", value = "innId")  Integer innId ,
