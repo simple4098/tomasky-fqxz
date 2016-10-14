@@ -3,7 +3,9 @@ package com.tomasky.fqxz.service.impl;
 import com.tomasky.fqxz.mapper.IShopRecommendMapper;
 import com.tomasky.fqxz.model.ShopRecommend;
 import com.tomasky.fqxz.service.IShopRecommendService;
+import com.tomasky.fqxz.service.handler.CheckParamHandler;
 import com.tomasky.fqxz.service.handler.ReturnHandler;
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,16 @@ public class ShopRecommendServiceImpl implements IShopRecommendService {
     @Autowired
     IShopRecommendMapper shopRecommendMapper;
 
+    @Autowired
+
+
     @Override
     public Map getShopRecommendList(Long innId) {
         ShopRecommend shopRecommend = new ShopRecommend();
+        Map check=CheckParamHandler.checkInnIdNotNull(innId);
+        if(MapUtils.isNotEmpty(check)){
+            return check;
+        }
         shopRecommend.setInnId(innId);
         List<ShopRecommend> list = shopRecommendMapper.selectByModel(shopRecommend);
         return ReturnHandler.success(list);
