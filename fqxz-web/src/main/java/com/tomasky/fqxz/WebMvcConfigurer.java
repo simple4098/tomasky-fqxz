@@ -1,14 +1,21 @@
 package com.tomasky.fqxz;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.tomasky.fqxz.web.filter.LogRecordInterceptor;
 import com.tomasky.fqxz.web.handler.CommonExceptionHandler;
 import com.tomasky.fqxz.web.handler.CommonMethodReturnValueHandler;
+import com.tomasky.fqxz.web.handler.MyMappingJacksonMessageConverter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,5 +40,11 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
         CommonExceptionHandler commonExceptionHandler = new  CommonExceptionHandler();
         exceptionResolvers.add(commonExceptionHandler);
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        MyMappingJacksonMessageConverter myMappingJacksonMessageConverter = new MyMappingJacksonMessageConverter();
+        converters.add(myMappingJacksonMessageConverter);
     }
 }

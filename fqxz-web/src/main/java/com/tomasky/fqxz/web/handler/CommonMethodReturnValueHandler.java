@@ -7,7 +7,6 @@ import com.tomasky.fqxz.common.core.utils.web.URLUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
@@ -55,7 +54,10 @@ public class CommonMethodReturnValueHandler implements HandlerMethodReturnValueH
 					responseSb.append(toJSONString(result));
 				}
 				if (log.isInfoEnabled()) {
-					log.info("[<--返回][url=" + cmd + "][code=" + result.getStatus() + "][msg=" + result.getMessage() + "][data=" + JSON.toJSONString(result.getData()) + "]");
+					long startTimeValue = (long) request.getAttribute("startTimeValue");
+					long endTimeValue = System.currentTimeMillis();
+					long time = endTimeValue-startTimeValue;
+					log.info("[<--返回][url={}][totalTime={}ms][status={}][msg={}][data={}]",cmd,time,result.getStatus(),result.getMessage(),JSON.toJSONString(result.getData()));
 				}
 				response.getWriter().println(responseSb.toString());
 

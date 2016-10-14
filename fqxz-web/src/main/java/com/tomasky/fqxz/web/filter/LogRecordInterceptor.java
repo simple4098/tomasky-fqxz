@@ -26,6 +26,8 @@ public class LogRecordInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		//response.setHeader("Access-Control-Allow-Origin", "*");
+		long startTimeValue = System.currentTimeMillis();
+		request.setAttribute("startTimeValue",startTimeValue);
 		try {
 			if(logger.isInfoEnabled()) {
 				request.getParameterMap();
