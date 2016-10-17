@@ -21,7 +21,6 @@ import com.tomasky.fqxz.BaseController;
 import com.tomasky.fqxz.bo.param.CommParam;
 import com.tomasky.fqxz.bo.param.product.ProductBo;
 import com.tomasky.fqxz.bo.param.product.ProductOrderBo;
-import com.tomasky.fqxz.dao.XzBaseinfoRepo;
 import com.tomasky.fqxz.model.Product;
 import com.tomasky.fqxz.service.IProductService;
 import com.tomasky.fqxz.vo.ProductOrderVo;
@@ -51,8 +50,6 @@ public class ProductController extends BaseController {
     @Autowired
     private IProductService productService;
 
-    @Autowired
-    private XzBaseinfoRepo xzBaseinfoRepo;
 
     @ApiOperation(value = "查询精品商品列表", notes = "查询精品商品列表", httpMethod = "GET")
    /* @ApiImplicitParam(name = "commParam", value = "接收参数实体CommParam", required = true, dataType = "CommParam")*/

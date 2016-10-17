@@ -124,10 +124,10 @@ public class ProductService implements IProductService {
             Product product = productDao.findById(productOrderVo.getProductId());
             if (product!=null){
                 BigDecimal subtract = product.getPrice().subtract(productOrderVo.getPrice());
-                if(!subtract.equals(new BigDecimal(0))){
+                if(subtract.intValue()!=0){
                     throw new ProductException(messageSourceAccessor.getMessage("xz.order.param.price"));
                 }
-                if (product.getStock()<=0){
+                if (product.getStock()<=0 || productOrderVo.getNum()>product.getStock()){
                     throw new ProductException(messageSourceAccessor.getMessage("xz.order.param.stock"));
                 }
             }
