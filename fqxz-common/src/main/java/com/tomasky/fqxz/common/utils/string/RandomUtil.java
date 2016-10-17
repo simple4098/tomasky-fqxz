@@ -118,6 +118,21 @@ public class RandomUtil {
     public static synchronized String getRandomString(int length) {
         StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < length; i++) {
+            int randomSelect = (int) (random.nextFloat() * 100) % 2;
+            buffer.append(getRandomChar(randomSelect));
+        }
+        return buffer.toString();
+    }
+
+    /**
+     * 获取指定长度随机字符和数字结合串
+     *
+     * @param length
+     * @return
+     */
+    public static synchronized String getRandomStringAndNumber(int length) {
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < length; i++) {
             int randomSelect = (int) (random.nextFloat() * 100) % 3;
             buffer.append(getRandomChar(randomSelect));
         }
