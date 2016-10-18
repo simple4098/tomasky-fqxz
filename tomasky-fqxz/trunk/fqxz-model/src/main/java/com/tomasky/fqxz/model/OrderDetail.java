@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author simple
  * @data 2016/10/11
  */
-@Entity(name = "order_detail")
+@Entity
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

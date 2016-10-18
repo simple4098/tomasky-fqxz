@@ -1,10 +1,6 @@
 package com.tomasky.fqxz.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,7 +8,7 @@ import java.util.Date;
  * @author simple
  * @data 2016/10/10
  */
-@Entity(name = "product")
+@Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +20,7 @@ public class Product {
     @Column(name = "prosource")
     private int proSource;
     //产品类型 0为产品 1为线路
-    @Column(name ="protype" )
+    @Column(name = "protype")
     private int proType;
     //产品名称
     @Column(name = "proname")
