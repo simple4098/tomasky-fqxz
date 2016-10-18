@@ -1,18 +1,13 @@
 package com.tomasky.fqxz.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.math.BigDecimal;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author simple
  * @data 2016/10/10
  */
-@Entity(name = "product_order")
+@Entity
 public class ProductOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
