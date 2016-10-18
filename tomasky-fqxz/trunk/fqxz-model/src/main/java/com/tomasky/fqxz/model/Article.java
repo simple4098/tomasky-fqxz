@@ -1,9 +1,5 @@
 package com.tomasky.fqxz.model;
 
-import com.tomasky.fqxz.common.SysConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.util.Date;
 

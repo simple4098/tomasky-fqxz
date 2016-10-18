@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "xz_baseinfo")
+@Entity
 public class XzBaseinfo {
 
     @Id
