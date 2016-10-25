@@ -48,8 +48,9 @@ public class XzBaseInfoService {
     }
 
     public InnCommentBaseInfoBo getCommentsByInnid(Integer innId) {
-        LOGGER.debug(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
-        LOGGER.debug(String.valueOf(cache.get("test-fqxz")));
+        LOGGER.info("---------------------------------------------------");
+        LOGGER.info(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
+        LOGGER.info(String.valueOf(cache.get("test-fqxz")));
         return commentApi.getCommentByInnId(innId);
     }
 }
