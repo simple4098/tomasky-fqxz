@@ -23,6 +23,13 @@
             <artifactId>cache-api</artifactId>
             <version>1.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.tomasky</groupId>
+            <artifactId>comment-rpc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>com.tomasky.framework</groupId>
             <artifactId>framework-message-client</artifactId>

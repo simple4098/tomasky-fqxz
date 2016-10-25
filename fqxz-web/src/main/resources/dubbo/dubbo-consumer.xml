@@ -9,7 +9,8 @@
 
     <import resource="dubbo-registry.xml"/>
 
-    <!--向外暴露的服务接口-->
     <dubbo:reference interface="com.tomasky.cache.api.Cache" id="cache"/>
+
+    <dubbo:reference interface="com.tomasky.comment.rpc.CommentApi" id="comment"/>
 
 </beans>
