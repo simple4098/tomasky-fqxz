@@ -8,7 +8,7 @@
     <!-- 定义变量APP_NAME用于区分不同应用的的记录 -->
     <property name="APP_NAME" value="tomasky-fqxz" />
     <!-- 定义变量LOG_HOME用于配置log日志生成的目录  -->
-    <property name="LOG_HOME" value="/logs/tomasky-fqxz/" />
+    <property name="LOG_HOME" value="/opt/logs/tomasky-fqxz/" />
     <!-- 定义输出日志的格式
        %d{yyyy-MM-dd  HH:mm:ss.SSS} 定义日期格式兼容java.text.SimpleDateFormat语法 2014-03-25 14:06:49.812
        %thread 输出产生日志的线程名
@@ -72,7 +72,7 @@
     <!-- 定义包/类级别的 appender-->
     <appender name="HISUN_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/order.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/fqxz.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
