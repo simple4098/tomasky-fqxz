@@ -54,9 +54,4 @@ public class WelcomeController extends BaseController {
         return new200(xzBaseinfoRepo.findById(3611l));
     }
 
-    @RequestMapping("/rpc/comment")
-    public Map<String, Object> getCommentsByInnid(Integer innId) {
-        return new200(xzBaseInfoService.getCommentsByInnid(innId));
-    }
-
 }
