@@ -2,6 +2,9 @@ package com.tomasky.fqxz.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tomasky.cache.api.Cache;
+import com.tomasky.comment.rpc.CommentApi;
+import com.tomasky.comment.rpc.bean.InnCommentBaseInfoBo;
 import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
 import com.tomasky.fqxz.mapper.XzBaseInfoMapper;
 import com.tomasky.fqxz.model.XzBaseinfo;
@@ -22,6 +25,12 @@ public class XzBaseInfoService {
     @Autowired
     private XzBaseInfoMapper xzBaseInfoMapper;
 
+    @Autowired
+    private CommentApi commentApi;
+
+    @Autowired
+    private Cache cache;
+
     public List<XzBaseinfo> findList(XzBaseInfoBo param) {
         return xzBaseInfoMapper.getXzBaseInfos(param);
     }
@@ -36,5 +45,11 @@ public class XzBaseInfoService {
     public Map getInnPayType(Long innId) {
         XzBaseinfo xzBaseinfo = xzBaseInfoMapper.getInnPayTypeAndKnowsAndAccount(innId);
         return ReturnHandler.success(xzBaseinfo);
+    }
+
+    public InnCommentBaseInfoBo getCommentsByInnid(Integer innId) {
+        LOGGER.debug(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
+        LOGGER.debug(String.valueOf(cache.get("test-fqxz")));
+        return commentApi.getCommentByInnId(innId);
     }
 }

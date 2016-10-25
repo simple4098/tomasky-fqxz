@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
  */
 @ComponentScan("com.tomasky.fqxz")
 @SpringBootApplication
-@ImportResource("classpath:dubbo/dubbo-cache-consumer.xml")
+@ImportResource("classpath:dubbo/dubbo-consumer.xml")
 @ServletComponentScan
 public class OrderApplication {
 
