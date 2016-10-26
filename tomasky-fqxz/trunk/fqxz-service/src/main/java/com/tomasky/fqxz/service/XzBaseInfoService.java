@@ -2,8 +2,8 @@ package com.tomasky.fqxz.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.tomasky.cache.api.Cache;
-import com.tomasky.comment.rpc.CommentApi;
+//import com.tomasky.cache.api.Cache;
+//import com.tomasky.comment.rpc.CommentApi;
 import com.tomasky.comment.rpc.bean.InnCommentBaseInfoBo;
 import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
 import com.tomasky.fqxz.mapper.XzBaseInfoMapper;
@@ -25,11 +25,11 @@ public class XzBaseInfoService {
     @Autowired
     private XzBaseInfoMapper xzBaseInfoMapper;
 
-    @Autowired
-    private CommentApi commentApi;
-
-    @Autowired
-    private Cache cache;
+//    @Autowired
+//    private CommentApi commentApi;
+//
+//    @Autowired
+//    private Cache cache;
 
     public List<XzBaseinfo> findList(XzBaseInfoBo param) {
         return xzBaseInfoMapper.getXzBaseInfos(param);
@@ -49,8 +49,9 @@ public class XzBaseInfoService {
 
     public InnCommentBaseInfoBo getCommentsByInnid(Integer innId) {
         LOGGER.info("---------------------------------------------------");
-        LOGGER.info(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
-        LOGGER.info(String.valueOf(cache.get("test-fqxz")));
-        return commentApi.getCommentByInnId(innId);
+//        LOGGER.info(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
+//        LOGGER.info(String.valueOf(cache.get("test-fqxz")));
+//        return commentApi.getCommentByInnId(innId);
+        return null;
     }
 }
