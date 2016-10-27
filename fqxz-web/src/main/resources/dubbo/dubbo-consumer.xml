@@ -9,8 +9,8 @@
 
     <import resource="dubbo-registry.xml"/>
 
-    <dubbo:reference interface="com.tomasky.cache.api.Cache" id="cache"/>
+    <dubbo:reference interface="com.tomasky.cache.api.Cache" id="cache" check="false"/>
 
-    <dubbo:reference interface="com.tomasky.comment.rpc.CommentApi" id="comment"/>
+    <dubbo:reference interface="com.tomasky.comment.rpc.CommentApi" id="comment" check="false"/>
 
 </beans>
