@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,12 +50,18 @@ public class XzBaseInfoService {
     }
 
     public InnCommentBaseInfoBo getCommentsByInnid(Integer innId) {
-        LOGGER.info("---------------------------------------------------");
+        LOGGER.info("---------------------getCommentsByInnid------------------------------");
         LOGGER.info(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
         LOGGER.info(String.valueOf(cache.get("test-fqxz")));
         InnCommentBaseInfoBo result = commentApi.getCommentsByInnId(innId);
-        LOGGER.info("---------------------------------------------------");
-        InnCommentBaseInfoBo result1 = commentApi.getAssignComments(innId, Lists.newArrayList(102, 103), Lists.newArrayList(100, 101));
         return result;
     }
+
+    public InnCommentBaseInfoBo getAssignCommentsByInnId(Integer innId, String commentIds, String impressionIds) {
+        LOGGER.info("---------------------getAssignCommentsByInnId------------------------------");
+        Arrays.asList(commentIds.split(","));
+        InnCommentBaseInfoBo result = commentApi.getAssignComments(innId, Lists.newArrayList(102, 103), Lists.newArrayList(100, 101));
+        return result;
+    }
+
 }
