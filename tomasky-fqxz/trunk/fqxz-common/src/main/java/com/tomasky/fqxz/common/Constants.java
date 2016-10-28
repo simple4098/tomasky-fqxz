@@ -45,6 +45,7 @@ public class Constants {
 
     // cache/session/cooikes最大存储时间：秒（30天）
     public final static int CACHE_MAX_AGE = 2592000;
+    public final static int CACHE_HALF_HOUR = 1800;
 
     //PAGE
     public final static int DEFAULT_PAGE_SIZE = 10;
