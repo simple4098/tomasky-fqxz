@@ -2,6 +2,7 @@ package com.tomasky.fqxz.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.tomasky.cache.api.Cache;
 import com.tomasky.comment.rpc.CommentApi;
 import com.tomasky.comment.rpc.bean.InnCommentBaseInfoBo;
@@ -51,7 +52,9 @@ public class XzBaseInfoService {
         LOGGER.info("---------------------------------------------------");
         LOGGER.info(String.valueOf(cache.put("test-fqxz", "momo", 10000)));
         LOGGER.info(String.valueOf(cache.get("test-fqxz")));
-        InnCommentBaseInfoBo result = commentApi.getCommentByInnId(innId);
+        InnCommentBaseInfoBo result = commentApi.getCommentsByInnId(innId);
+        LOGGER.info("---------------------------------------------------");
+        InnCommentBaseInfoBo result1 = commentApi.getAssignComments(innId, Lists.newArrayList(102, 103), Lists.newArrayList(100, 101));
         return result;
     }
 }
