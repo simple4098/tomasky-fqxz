@@ -40,4 +40,9 @@ public class CommentController extends BaseController {
         return new200(xzBaseInfoService.getCommentsByInnid(innId));
     }
 
+    @RequestMapping("/get/assign")
+    public Map<String, Object> getAssignCommentsByInnId(Integer innId, String commentIds, String impressionIds) {
+        return new200(xzBaseInfoService.getAssignCommentsByInnId(innId, commentIds, impressionIds));
+    }
+
 }
