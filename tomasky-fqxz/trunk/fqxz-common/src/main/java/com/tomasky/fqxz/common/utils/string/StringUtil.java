@@ -2,6 +2,7 @@ package com.tomasky.fqxz.common.utils.string;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -157,6 +158,21 @@ public final class StringUtil {
         return charaString.matches("^[a-zA-Z]*");
     }
 
+    /**
+     * 以逗号分隔的数字字符串转化为整形字符串
+     * @param str
+     * @return
+     */
+    public static Integer[] stringToIntegerByComma(String str) {
+        StringTokenizer toKenizer = new StringTokenizer(str, ",");
+        Integer ret[] = new Integer[toKenizer.countTokens()];
+        int i = 0;
+        while (toKenizer.hasMoreElements()) {
+            ret[i++] = Integer.valueOf(toKenizer.nextToken().trim());
+        }
+        return ret;
+    }
+
     public static void main(String[] as) {
         // System.out.println(encryptBySHA("111111"+"4e310d55"));
         // System.out.println(subString("你好111",2,null));
@@ -166,7 +182,9 @@ public final class StringUtil {
 //		System.out.println(getLength("aaa啊啊啊"));
 //		System.out.println(subString("aaaa啊啊啊啊啊啊", 11, "gh")); 
 //		System.out.println(subString("aaaa啊啊啊啊啊啊", 11));
-        System.out.println("\\u003cdiv class=\\u0027pripackage_date_main\\u0027\\u003e\\r\\n\\u003cdiv class=\\u0027pripackage_date_month\\u0027 id=\\u0027bigCalControl\\u0027\\u003e\\r\\n\\u003cdiv\\u003e2014\\u003cbr/\\u003e11月\\u003cdfn\\u003e&nbsp;\\u003c/dfn\\u003e\\u003c/div\\u003e\\r\\n\\u003cdiv\\u003e2014\\u003cbr/\\u003e11月\\u003c/div\\u003e\\r\\n".replace("/u003c/g", "\\"));
+        System.out.println(("\\u003cdiv class=\\u0027pripackage_date_main\\u0027\\u003e\\r\\n\\u003cdiv class=\\u0027pripackage_date_month\\u0027 " +
+                "id=\\u0027bigCalControl\\u0027\\u003e\\r\\n\\u003cdiv\\u003e2014\\u003cbr/\\u003e11月\\u003cdfn\\u003e&nbsp;" +
+                "\\u003c/dfn\\u003e\\u003c/div\\u003e\\r\\n\\u003cdiv\\u003e2014\\u003cbr/\\u003e11月\\u003c/div\\u003e\\r\\n").replace("/u003c/g", "\\"));
     }
 
 }
