@@ -44,10 +44,28 @@ public class Result implements Serializable {
         this.success = true;
     }
 
+    public Result(ResultCode resultCode, Object data) {
+        this.status = resultCode.getStatus();
+        this.message = resultCode.getMessage();
+        this.data = data;
+    }
+
     public Result(ResultCode resultCode, boolean isSuccess) {
         this.status = resultCode.getStatus();
         this.message = resultCode.getMessage();
         this.success = isSuccess;
+    }
+
+    /**
+     * 附加返回错误信息
+     *
+     * @param resultCode
+     * @param extraRrrorMsg
+     */
+    public Result(ResultCode resultCode, String extraRrrorMsg) {
+        this.status = resultCode.getStatus();
+        this.message = resultCode.getMessage() + ":" + (null != extraRrrorMsg ? extraRrrorMsg : "");
+        this.success = false;
     }
 
     public String getStatus() {
