@@ -51,7 +51,7 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
             log.error("CommonExceptionHandler catche the System Error, ", sex.getMessage());
         } else if (RpcException.class.isAssignableFrom(ex.getClass())) {
             // dubbo远程调用异常
-            result = new Result(ResultCode.COMMON_SYSTEM_RPC_EXCEPTION, ex.getMessage());
+            result = new Result(ResultCode.COMMON_SYSTEM_RPC_EXCEPTION, false);
             log.error("CommonExceptionHandler catche the RPCException, ", ex);
         } else if (IllegalArgumentException.class.isAssignableFrom(ex.getClass())) {
             // 参数异常
@@ -59,7 +59,7 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
             log.error("CommonExceptionHandler catche the IllegalArgumentException, ", ex);
         } else {
             // 其他系统错误
-            result = new Result(ResultCode.OTHER_EXCEPTION, ex.getMessage());
+            result = new Result(ResultCode.OTHER_EXCEPTION, false);
             log.error("CommonExceptionHandler catche the Other Error, ", ex);
         }
         String requestHeader = request.getHeader("Accept");
@@ -87,7 +87,8 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
             long startTimeValue = (long) request.getAttribute("startTimeValue");
             long endTimeValue = System.currentTimeMillis();
             long time = endTimeValue - startTimeValue;
-            log.info("[<--返回][url={}][totalTime={}ms][status={}][msg={}][data={}]", request.getServletPath(), time, result.getStatus(), result.getMessage(), JSON.toJSONString(result.getData()));
+            log.info("[<--返回][url={}][totalTime={}ms][status={}][msg={}][data={}]", request.getServletPath(), time, result.getStatus(), result.getMessage(), JSON.toJSONString
+                    (result.getData()));
 
             if (URLUtils.isJsonp(request)) {
                 String callback = request.getParameter("callback");
