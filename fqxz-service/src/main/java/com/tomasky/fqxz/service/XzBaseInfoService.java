@@ -6,6 +6,7 @@ import com.tomasky.cache.api.Cache;
 import com.tomasky.comment.rpc.CommentApi;
 import com.tomasky.comment.rpc.bean.InnCommentBaseInfoBo;
 import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
+import com.tomasky.fqxz.common.utils.string.StringUtil;
 import com.tomasky.fqxz.mapper.XzBaseInfoMapper;
 import com.tomasky.fqxz.model.XzBaseinfo;
 import com.tomasky.fqxz.service.handler.ReturnHandler;
@@ -59,19 +60,19 @@ public class XzBaseInfoService {
 
     public InnCommentBaseInfoBo getAssignCommentsByInnId(Integer innId, String commentIds, String impressionIds) {
         LOGGER.info("---------------------getAssignCommentsByInnId------------------------------");
-        List cs;
-        List is;
+        List<Integer> csList;
+        List<Integer> isList;
         if (StringUtils.isNotBlank(commentIds)) {
-            cs = Arrays.asList(Arrays.stream(commentIds.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray());
+            csList = Arrays.asList(StringUtil.stringToIntegerByComma(commentIds));
         } else {
             return null;
         }
         if (StringUtils.isNotBlank(impressionIds)) {
-            is = Arrays.asList(Arrays.stream(impressionIds.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray());
+            isList = Arrays.asList(StringUtil.stringToIntegerByComma(impressionIds));
         } else {
             return null;
         }
-        InnCommentBaseInfoBo result = commentApi.getAssignComments(innId, cs, is);
+        InnCommentBaseInfoBo result = commentApi.getAssignComments(innId, csList, isList);
         return result;
     }
 
