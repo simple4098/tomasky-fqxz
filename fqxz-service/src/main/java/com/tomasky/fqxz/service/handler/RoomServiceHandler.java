@@ -10,7 +10,6 @@ import com.tomasky.fqxz.mapper.XzBaseInfoMapper;
 import com.tomasky.fqxz.model.XzBaseinfo;
 import com.tomasky.fqxz.vo.FacilitiesVo;
 import com.tomasky.fqxz.vo.RecommendRoomVo;
-import com.tomasky.fqxz.vo.RoomDetail;
 import com.tomasky.fqxz.vo.RoomTypeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,12 +80,12 @@ public class RoomServiceHandler {
                 }
                 recommendRoomVo.setFacilities(facilities);
 
-                Double price = 0d;
-                List<RoomDetail> roomDetails = roomTypeInfo.getRoomDetail();
-                if (ListUtil.isNotEmpty(roomDetails)) {
-                    price = roomDetails.get(0).getRoomPrice();
-                }
-                recommendRoomVo.setPrice(price);
+//                Double price = 0d;
+//                List<RoomDetail> roomDetails = roomTypeInfo.getRoomDetail();
+//                if (ListUtil.isNotEmpty(roomDetails)) {
+//                    price = roomDetails.get(0).getRoomPrice();
+//                }
+//                recommendRoomVo.setPrice(price);
                 recommendRoomVo.setName(roomTypeInfo.getRoomTypeName());
                 recommendRoomVo.setRoomId(Long.valueOf(String.valueOf(roomTypeInfo.getRoomTypeId())));
                 result.add(recommendRoomVo);
