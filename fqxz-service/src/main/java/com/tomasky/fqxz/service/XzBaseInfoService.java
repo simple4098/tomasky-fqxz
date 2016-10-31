@@ -59,10 +59,15 @@ public class XzBaseInfoService {
 
     public InnCommentBaseInfoBo getAssignCommentsByInnId(Integer innId, String commentIds, String impressionIds) {
         LOGGER.info("---------------------getAssignCommentsByInnId------------------------------");
+        List cs = Lists.newArrayList();
+        List is = Lists.newArrayList();
         if (null != commentIds) {
-            Arrays.asList(commentIds.split(","));
+            cs = Arrays.asList(Arrays.stream(commentIds.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray());
         }
-        InnCommentBaseInfoBo result = commentApi.getAssignComments(innId, Lists.newArrayList(102, 103), Lists.newArrayList(100, 101));
+        if (null != impressionIds) {
+            is = Arrays.asList(Arrays.stream(impressionIds.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray());
+        }
+        InnCommentBaseInfoBo result = commentApi.getAssignComments(innId, cs, is);
         return result;
     }
 
