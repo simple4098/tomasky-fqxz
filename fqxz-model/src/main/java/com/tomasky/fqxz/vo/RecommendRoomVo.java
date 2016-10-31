@@ -9,8 +9,45 @@ package com.tomasky.fqxz.vo;
 public class RecommendRoomVo {
     private String facilities;//配套设置
     private String name;//房间名称
-    private Double price;//价格
+//    private Double price;//价格
     private Long roomId;//房型编号
+    private String bedTypeName;//床型名称
+    private String floorNum;//楼层数
+    private Double roomArea;//房间面积
+    private String img;//封面图片
+
+
+    public String getBedTypeName() {
+        return bedTypeName;
+    }
+
+    public void setBedTypeName(String bedTypeName) {
+        this.bedTypeName = bedTypeName;
+    }
+
+    public String getFloorNum() {
+        return floorNum;
+    }
+
+    public void setFloorNum(String floorNum) {
+        this.floorNum = floorNum;
+    }
+
+    public Double getRoomArea() {
+        return roomArea;
+    }
+
+    public void setRoomArea(Double roomArea) {
+        this.roomArea = roomArea;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public RecommendRoomVo() {
         super();
@@ -32,13 +69,6 @@ public class RecommendRoomVo {
         this.name = name;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     public Long getRoomId() {
         return roomId;
