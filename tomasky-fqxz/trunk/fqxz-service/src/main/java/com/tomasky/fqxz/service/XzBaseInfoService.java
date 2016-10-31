@@ -2,7 +2,6 @@ package com.tomasky.fqxz.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import com.tomasky.cache.api.Cache;
 import com.tomasky.comment.rpc.CommentApi;
 import com.tomasky.comment.rpc.bean.InnCommentBaseInfoBo;
@@ -10,6 +9,7 @@ import com.tomasky.fqxz.bo.param.baseInfo.XzBaseInfoBo;
 import com.tomasky.fqxz.mapper.XzBaseInfoMapper;
 import com.tomasky.fqxz.model.XzBaseinfo;
 import com.tomasky.fqxz.service.handler.ReturnHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +59,17 @@ public class XzBaseInfoService {
 
     public InnCommentBaseInfoBo getAssignCommentsByInnId(Integer innId, String commentIds, String impressionIds) {
         LOGGER.info("---------------------getAssignCommentsByInnId------------------------------");
-        List cs = Lists.newArrayList();
-        List is = Lists.newArrayList();
-        if (null != commentIds) {
+        List cs;
+        List is;
+        if (StringUtils.isNotBlank(commentIds)) {
             cs = Arrays.asList(Arrays.stream(commentIds.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray());
+        } else {
+            return null;
         }
-        if (null != impressionIds) {
+        if (StringUtils.isNotBlank(impressionIds)) {
             is = Arrays.asList(Arrays.stream(impressionIds.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray());
+        } else {
+            return null;
         }
         InnCommentBaseInfoBo result = commentApi.getAssignComments(innId, cs, is);
         return result;
